@@ -1,7 +1,7 @@
 <template>
   <li>
     <h5 @click="clickList">{{ movie.title }}</h5>
-    <p>{{movie}}</p>
+    <p>{{ movie }}</p>
     <!-- <p>{{ movie.overview }}</p> -->
   </li>
 </template>
