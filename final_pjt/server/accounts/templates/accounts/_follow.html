@@ -1,0 +1,67 @@
+<div class="jumbotron text-center text-white bg-dark">
+  <p class="lead mb-1">작성자 정보</p>
+  <h1 class="display-4">{{ person.username }}</h1>
+  <hr>
+  {% with followings=person.followings.all followers=person.followers.all %}
+    <p class="lead">
+      팔로잉 : <span id="followingsCnt">{{ followings|length }}</span> / 
+      팔로워 : <span id="followersCnt">{{ followers|length }}</span>
+    </p>
+    <!-- 팔로우 버튼 -->
+    {% if request.user != person %}
+      <form class="follow-form" data-person-id="{{ person.pk }}">
+        {% csrf_token %}
+        <button id="follow-btn" class="btn-lg" role="button">
+          {% if request.user in followers %}
+            Unfollow
+          {% else %}
+            Follow
+          {% endif %}
+        </button>
+      </form>
+    {% endif %}
+  {% endwith %}
+</div>
+
+<script>
+  const form = document.querySelector('.follow-form')
+  const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault()
+    const personId = event.target.dataset.personId
+    axios({
+      url: `/accounts/follow/${ personId }/`,
+      method: 'post',
+      headers: {
+        'X-CSRFToken': csrfToken,
+      },
+    }).then((response) => {
+      const { status, followings_cnt, followers_cnt } = response.data
+
+      const followingsCnt = document.querySelector('#followingsCnt')
+      const followersCnt = document.querySelector('#followersCnt')
+      followingsCnt.innerText = followings_cnt
+      followersCnt.innerText = followers_cnt
+
+      const followBtn = document.querySelector('#follow-btn')
+      if (status) {
+        followBtn.setAttribute('class', 'btn-lg btn-secondary')
+        followBtn.innerText = 'Unfollow'
+      } else {
+        followBtn.setAttribute('class', 'btn-lg btn-primary')
+        followBtn.innerText = 'Follow'
+      }
+    }).catch((error) => {
+      switch (error.response.status) {
+        case 401: {
+          location.href = '/accounts/login/'
+          break
+        }
+        default: {
+          alert('알수없는 에러가 발생했습니다. 관리자를 통해 문의해주세요.')
+        }
+      }
+    })
+  })
+</script>
