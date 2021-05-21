@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <MovieCurrent />
+    <MovieCurrent/>
     <UpComing/>
   </div>
 

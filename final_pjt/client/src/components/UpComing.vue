@@ -1,13 +1,13 @@
 <template>
-  <div class="my-4">
-    <h2 class="text-center">개봉 예정작</h2>
-    <ul>
+  <div>
+    <h2 class="text-center my-4">개봉 예정작</h2>
+    <div class="row g-3 mx-3">
       <UpComingItem
         v-for="movie in movies"
         :key="movie.id"
         :movie="movie"
       />
-    </ul>
+    </div>
   </div>
 </template>
 

@@ -1,8 +1,7 @@
 <template>
-  <li>
-    <h5 @click="searchMovie">{{ movie.title }}</h5>
-    <img :src="movie_poster" alt="" style="width: 30%;">
-  </li>
+  <div class="col-3">
+    <img @click="searchMovie" :src="movie_poster" alt="" class="img-fluid img-thumbnail">
+  </div>
 </template>
 
 <script>
@@ -29,5 +28,10 @@ export default {
 </script>
 
 <style>
+.img-container > img {
+  width: 220px;
+  height: 320px;
+  object-fit: fill;
+}
 
 </style>

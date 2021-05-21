@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>현재 상영작</h2>
+    <h2 class="text-center my-4">현재 상영작</h2>
     <MovieCurrentItem
       v-for="movieName in currentList" 
       :key="movieName.rnum"
