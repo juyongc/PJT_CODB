@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2>개봉 예정작</h2>
+  <div class="my-4">
+    <h2 class="text-center">개봉 예정작</h2>
     <ul>
       <UpComingItem
         v-for="movie in movies"

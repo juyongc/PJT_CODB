@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <div id="now-playing">
-      <h2>현재 상영작</h2>
+    <div id="now-playing" class="my-4">
+      <h2 class="text-center">현재 상영작</h2>
     </div>
     <UpComing/>
   </div>
