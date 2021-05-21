@@ -1,15 +1,16 @@
 <template>
   <li>
+    <!-- <p>{{ movie }}</p> -->
     <h5 @click="searchMovie">{{ movie.title }}</h5>
   </li>
 </template>
 
 <script>
 export default {
-  name: 'UpcomingItem',
+  name: 'RecommendationItem',
   props: {
     movie: {
-      type: Object
+      type: Object,
     }
   },
   methods: {

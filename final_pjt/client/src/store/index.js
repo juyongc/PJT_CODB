@@ -14,6 +14,10 @@ export default new Vuex.Store({
     detail : null,
     searchingList: [],
     upComingList: [],
+    recommendList: [],
+    choiceList : [],
+    myChoice: [],
+    page: 1,
   },
   mutations: {
     SEARCH_MOVIE: function (state, movieList) {
@@ -29,6 +33,37 @@ export default new Vuex.Store({
     },
     GET_UPCOMING_LIST: function (state, upComingList) {
       state.upComingList = upComingList
+    },
+    CHOICE_MOVIE_SET: function (state, movieSet) {
+      state.choiceList = movieSet
+    },
+    PREVIOUS_PAGE: function (state) {
+      state.page -= 1
+      // console.log(state.page)
+    },
+    NEXT_PAGE: function (state) {
+      state.page += 1
+      // console.log(state.page)
+    },
+    UPDATE_CHOICE: function (state, movieId) {
+      if (!state.myChoice.includes(movieId)) {
+        state.myChoice.push(movieId)
+        // console.log(state.myChoice)
+      }
+      else {
+        const index = state.myChoice.indexOf(movieId)
+        state.myChoice.splice(index, 1)
+        // console.log(state.myChoice)
+      }
+    },
+    MAKE_RECOMMENDATION: function (state, movieSet) {
+      if (movieSet.length > 4) {
+        const newMovieSet = movieSet.sort(function (a, b) {
+          return b.popularity - a.popularity
+        })
+        state.recommendList = state.recommendList.concat(newMovieSet)
+      }
+      // console.log(state.recommendList)
     }
   },
   actions: {
@@ -83,6 +118,39 @@ export default new Vuex.Store({
         // console.log(res.data)
         commit('GET_UPCOMING_LIST', res.data.results)
       })
+    },
+    choiceMovie: function ({ commit }, page) {
+      axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/movie/popular?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=${page}`
+      })
+      .then(res => {
+        commit('CHOICE_MOVIE_SET', res.data.results)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+    updateChoice: function ({ commit }, movieId) {
+      commit('UPDATE_CHOICE', movieId)      
+    },
+    makeRecommendation: function ({ commit }) {
+      this.state.recommendList = []
+      // console.log(this.state.myChoice)
+      for (let movieId of this.state.myChoice) {
+        // console.log(movieId)
+        axios({
+          method: 'get',
+          url: `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=1`
+        })
+        .then(res => {
+          // console.log(res.data.results)
+          commit('MAKE_RECOMMENDATION', res.data.results)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      }
     }
   },
   modules: {
