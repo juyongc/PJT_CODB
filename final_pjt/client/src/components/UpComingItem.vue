@@ -1,6 +1,6 @@
 <template>
   <li>
-    <h5>{{ movie.title }}</h5>
+    <h5 @click="searchMovie">{{ movie.title }}</h5>
   </li>
 </template>
 
@@ -12,6 +12,13 @@ export default {
       type: Object
     }
   },
+  methods: {
+    searchMovie: function () {
+      // console.log(this.movie.title)
+      this.$store.dispatch('searchMovie', this.movie.title)
+      this.$router.push({ name: 'SearchMovieList' })
+    }
+  }
 }
 </script>
 

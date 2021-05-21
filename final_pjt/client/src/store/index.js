@@ -77,7 +77,7 @@ export default new Vuex.Store({
     getUpComingList: function ({ commit }) {
       axios({
         method: 'get',
-        url: 'https://api.themoviedb.org/3/movie/upcoming?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=1'
+        url: 'https://api.themoviedb.org/3/movie/upcoming?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=1&region=KR'
       })
       .then(res => {
         // console.log(res.data)
