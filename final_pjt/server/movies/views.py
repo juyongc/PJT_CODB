@@ -1,6 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_GET, require_POST, require_http_methods
-from .models import Movie
+from .models import Movie, Poster
+from .serializers import PosterSerializer
+
+import json
+import requests
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 
 # Create your views here.
@@ -34,3 +41,35 @@ def recommended(request):
         'vote_movies': vote_movies,
     }
     return render(request, 'movies/recommended.html', context)
+
+@api_view(['POST','GET'])
+def poster(request):
+    # POST 요청일 때
+    NAVER_URL = 'https://openapi.naver.com/v1/search/movie.json'
+    secret_key = json.loads(open('secrets.json').read())
+    naver_key = secret_key['VUE_APP_NAVER_API_KEY']
+    naver_pw = secret_key['VUE_APP_NAVER_API_PW']
+    headers = {
+      'X-Naver-Client-Id': naver_key,
+      'X-Naver-Client-Secret': naver_pw,
+    }
+
+    if request.method == 'POST':
+        serializer = PosterSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            params = {
+                'query': serializer.data["poster_title"],
+            }
+            result = requests.get(NAVER_URL,params=params,headers=headers)
+            json_data = result.json()
+            get_poster = json_data['items']
+            # print(get_poster)
+            # print(result.status_code)
+            return Response(get_poster,status=200)
+    elif request.method == 'GET':
+        print(json.dumps(secret_key))
+        print(naver_key, naver_pw)
+        posters = Poster.objects.all()
+        serializer = PosterSerializer(posters, many=True)
+        return Response(serializer.data)

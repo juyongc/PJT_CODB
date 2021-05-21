@@ -10,6 +10,7 @@ export default new Vuex.Store({
     createPersistedState(),
   ],
   state: {
+    currentMovieList: [],
     searchs: [],
     detail : null,
     searchingList: [],
