@@ -1,22 +1,23 @@
 <template>
-  <div>
-    <form action="">
-      <input type="text">
-      <button>검색</button>
-    </form>
+  <div class="home">
     <MovieCurrent />
+    <UpComing/>
   </div>
 
 </template>
 
 <script>
+// import SearchMovieForm from '@/components/SearchMovieForm.vue'
+import UpComing from '@/components/UpComing.vue'
 
 import MovieCurrent from '@/components/MovieCurrent.vue'
 export default {
-  name:'Home',
+  name: 'Home',
   components: {
+    UpComing
     MovieCurrent,
-
+  },
+  method: {
   }
 }
 </script>
