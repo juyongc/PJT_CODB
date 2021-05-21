@@ -1,21 +1,27 @@
 <template>
-  <div class="movie-info">
-    <input 
-      type="text" 
-      v-model="inputText" 
-      @keyup.enter="searchMovie" 
-      name='searchingList' 
-      list='searchingList'
-      @input="searchingMovie"
-    >
-    <datalist id="searchingList">
-      <option
-        v-for="movie in searchingMovies"
-        :key="movie.id"
-      >{{ movie.title }}</option>
-    </datalist>
-    <button @click="searchMovie">검색</button>
-  </div>
+  <form class="row g-3">
+    <div class="col-sm-10">
+      <input 
+        type="search" 
+        v-model="inputText" 
+        @keyup.enter="searchMovie" 
+        @input="searchingMovie"
+        class="form-control me-2 "
+        name='searchingList' 
+        list='searchingList'
+        placeholder="Search"
+      >
+      <datalist id="searchingList">
+        <option
+          v-for="movie in searchingMovies"
+          :key="movie.id"
+        >{{ movie.title }}</option>
+      </datalist>
+    </div>
+    <div class="col-sm-2">
+      <button @click="searchMovie" class="btn btn-outline-dark">검색</button>
+    </div>
+  </form>
 </template>
 
 <script>

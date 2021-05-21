@@ -6,7 +6,7 @@
       <button @click="reload">다른 추천 영화 보기</button>
       <ul>
         <RecommendationItem
-          v-for="movie in limit(movies)"
+          v-for="movie in movies.slice(0, 20)"
           :key="movie.id"
           :movie="movie"
         />
@@ -36,7 +36,7 @@ export default {
   },
   computed: {
     movies: function () {
-      return _.shuffle(this.$store.state.recommendList)
+      return this.$store.state.recommendList
     }
   },
   methods: {
@@ -44,11 +44,8 @@ export default {
       this.$store.dispatch('choiceMovie', this.$store.state.page)
       this.$router.push({ name: 'ChoiceMovie' })
     },
-    limit: function (movieList) {
-      return movieList.slice(0, 20)
-    },
     reload: function () {
-      history.go(0)
+      this.$store.state.recommendList = _.shuffle(this.$store.state.recommendList)
     }
   },
   created: function () {

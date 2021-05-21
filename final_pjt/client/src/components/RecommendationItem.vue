@@ -17,7 +17,7 @@ export default {
     searchMovie: function () {
       // console.log(this.movie.title)
       this.$store.dispatch('searchDetail', this.movie.id)
-      this.$router.push({ name: 'SearchMovieDetail' })
+      this.$router.push({ name: 'SearchMovieDetail', params: { title: this.movie.title }})
     }
   }
 }

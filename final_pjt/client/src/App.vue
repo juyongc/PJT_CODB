@@ -1,10 +1,18 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> | 
-      <SearchMovieForm style="display: inline-block;"/> | 
-      <router-link to="/recommendation">Recommendation</router-link>
-    </div>
+    <nav class="navbar navbar-light bg-light row g-3 text-center">
+      <div class="col-md-2">
+        <router-link to="/" class="nav-link">
+          Home
+        </router-link>
+      </div>
+      <div class="col-md-8">
+        <SearchMovieForm class="form-horizontal"/>
+      </div>
+      <div class="col-md-2">
+        <router-link to="/recommendation" class="nav-link">Recommendation</router-link>
+      </div>
+    </nav>
 
     <router-view/>
   </div>

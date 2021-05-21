@@ -14,7 +14,7 @@ import MovieCurrent from '@/components/MovieCurrent.vue'
 export default {
   name: 'Home',
   components: {
-    UpComing
+    UpComing,
     MovieCurrent,
   },
   method: {
