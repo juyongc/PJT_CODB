@@ -3,7 +3,7 @@
     <div id="nav">
       <router-link to="/">Home</router-link> | 
       <SearchMovieForm style="display: inline-block;"/> | 
-      <router-link to="/about">About</router-link>
+      <router-link to="/recommendation">Recommendation</router-link>
     </div>
 
     <router-view/>
