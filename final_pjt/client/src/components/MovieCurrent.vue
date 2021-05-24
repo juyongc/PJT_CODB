@@ -26,10 +26,10 @@ export default {
     }
   },
   created() { 
-      const KOFIC_KEY = process.env.VUE_APP_KOFIC_API_KEY
+      // const KOFIC_KEY = process.env.VUE_APP_KOFIC_API_KEY
       const KOFIC_URL = 'http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
       const params = {
-        key: KOFIC_KEY,
+        key: '04455cff29ada04fa486cc61ac4f0e9d',
         targetDt: this.yesterday,
       }
       axios({

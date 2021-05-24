@@ -8,7 +8,7 @@
     <p>주연 배우</p>
     <p>줄거리 : {{ movie.overview }}</p>
     <hr>
-    <p>{{movie}}</p>
+    <p>{{ movie }}</p>
   </div>
 </template>
 
