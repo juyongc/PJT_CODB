@@ -4,13 +4,13 @@
     <div v-if="movies.length > 0">
       <h3>추천 영화 목록</h3>
       <button @click="reload">다른 추천 영화 보기</button>
-      <ul>
+      <div>
         <RecommendationItem
-          v-for="movie in movies.slice(0, 20)"
-          :key="movie.id"
+          v-for="(movie, index) in movies.slice(0, 20)"
+          :key="index"
           :movie="movie"
         />
-      </ul>
+      </div>
       <hr>
       <p @click="choiceMovie">좋아하는 영화 추가하기</p>
     </div>

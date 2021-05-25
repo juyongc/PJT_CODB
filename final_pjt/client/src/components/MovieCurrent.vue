@@ -1,13 +1,27 @@
 <template>
   <div>
     <h2 class="text-center my-4">현재 상영작</h2>
-    <MovieCurrentItem
-      v-for="movieName in currentList" 
-      :key="movieName.rnum"
-      :movieName="movieName"
-    />
+      <template>
+        <div>
+          <b-carousel
+            id="carousel-1"
+            :interval="4000"
+            fade
+            background="#ababab"
+            controls
+            img-height=480
+            img-width=320
+          >
+            <MovieCurrentItem
+              v-for="movieName in currentList" 
+              :key="movieName.rnum"
+              :movieName="movieName"
+            />
+          </b-carousel>
+        </div>
+      </template>
+    
   </div>
-
 </template>
 
 <script>

@@ -1,8 +1,12 @@
 <template>
-  <div>
-    <!-- 만 :checked="bool" -->
-    <input type="checkbox"  @click="updateChoice" :id="movie.id" :value="movie.id" :checked="inMyList">
-    <label :for="movie.id">{{ movie.title }}</label>
+  <div class="col">
+    <div class="card">
+      <img class="card-img" :src="movie_poster" alt="movie poster">
+      <div class="card-img-overlay">
+        <input type="checkbox"  @click="updateChoice" :id="movie.id" :value="movie.id" :checked="inMyList">
+        <!-- <label :for="movie.id">{{ movie.title }}</label> -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -30,6 +34,11 @@ export default {
     }
     else {
       this.inMyList = false
+    }
+  },
+  computed: {
+    movie_poster: function () {
+      return 'https://www.themoviedb.org/t/p/original/' + this.movie.poster_path
     }
   }
 }

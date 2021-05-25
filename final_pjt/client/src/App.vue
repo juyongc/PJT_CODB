@@ -1,16 +1,21 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-light bg-light row g-3 text-center">
-      <div class="col-md-2">
-        <router-link to="/" class="nav-link">
-          Home
-        </router-link>
+      <div class="col-md-1">
+        <router-link :to="{ name: 'Home' }" class="nav-link">Home</router-link>
       </div>
       <div class="col-md-8">
         <SearchMovieForm class="form-horizontal"/>
       </div>
-      <div class="col-md-2">
-        <router-link to="/recommendation" class="nav-link">Recommendation</router-link>
+      
+      <div class="col-md-1">
+        <router-link :to="{ name: 'Recommendation' }" class="nav-link">Recommendation</router-link>
+      </div>
+      <div class="col-md-1">
+        <router-link :to="{ name: 'Reviews' }" class="nav-link">Community</router-link>
+      </div>
+      <div class="col-md-1">
+        <router-link :to="{ name: 'Home' }" class="nav-link">Sign in</router-link>
       </div>
     </nav>
 

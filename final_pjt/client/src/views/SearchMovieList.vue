@@ -1,11 +1,15 @@
 <template>
-  <ul>
-    <SearchMovieListItem
-      v-for="(movie, idx) in movies"
-      :key="idx"
-      :movie="movie"
-    />
-  </ul>
+  <div>
+    <h2>검색 결과</h2>
+
+    <div class="row row-cols-1">
+      <SearchMovieListItem
+        v-for="(movie, idx) in movies"
+        :key="idx"
+        :movie="movie"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
