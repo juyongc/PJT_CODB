@@ -6,14 +6,16 @@
           Home
         </router-link>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-6">
         <SearchMovieForm class="form-horizontal"/>
+      </div>
+      <div class="col-md-2">
+        <router-link to="/Login" class="nav-link">Login</router-link>
       </div>
       <div class="col-md-2">
         <router-link to="/recommendation" class="nav-link">Recommendation</router-link>
       </div>
     </nav>
-
     <router-view/>
   </div>
 </template>
