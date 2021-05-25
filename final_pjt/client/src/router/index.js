@@ -5,7 +5,8 @@ import Recommendation from '@/views/Recommendation.vue'
 import SearchMovieList from '@/views/SearchMovieList.vue'
 import SearchMovieDetail from '@/views/SearchMovieDetail.vue'
 import ChoiceMovie from '@/views/ChoiceMovie.vue'
-
+import Login from '@/views/Login.vue'
+import Signup from '@/views/Signup.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,7 +34,16 @@ const routes = [
     path: '/recommendation/choice',
     name: 'ChoiceMovie',
     component: ChoiceMovie,
-
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/login/signup',
+    name: 'Signup',
+    component: Signup,
   }
 ]
 
