@@ -16,8 +16,10 @@ export default {
   name: 'MovieCurrentItem',
   data: function () {
     return {
+      moviePosters: [],
       moviePoster: [],
       imgURL: '',
+
     }
   },
   props: {
@@ -41,6 +43,7 @@ export default {
         // console.log('sucess!',response)
         // console.log(response.data)
         this.moviePoster = response.data
+        this.moviePosters.push(this.moviePoster[0])
         this.imgURL = this.moviePoster[0]['image']
         return this.imgURL
       }).catch(error => {

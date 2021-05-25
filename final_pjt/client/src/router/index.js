@@ -9,6 +9,8 @@ import Reviews from '@/views/community/ReviewList.vue'
 import ReviewDetail from '@/views/community/ReviewListItem.vue'
 import CreateReview from '@/views/community/CreateReview.vue'
 import UpdateReview from '@/views/community/UpdateReview.vue'
+import Login from '@/views/Login.vue'
+import Signup from '@/views/Signup.vue'
 
 Vue.use(VueRouter)
 
@@ -57,6 +59,16 @@ const routes = [
     path: '/review/:pk/update',
     name: 'UpdateReview',
     component: UpdateReview,
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+  },
+  {
+    path: '/login/signup',
+    name: 'Signup',
+    component: Signup,
   }
 ]
 
