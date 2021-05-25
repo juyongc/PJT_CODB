@@ -180,5 +180,5 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # 추후 시간 변경할 것
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=50),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
 }
