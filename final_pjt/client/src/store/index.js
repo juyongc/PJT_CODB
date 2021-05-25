@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import createPersistedState from 'vuex-persistedstate'
+// import router from 'src/router'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     choiceList : [],
     myChoice: [],
     page: 1,
+    backdropsImg: [],
+    reviews: [],
+    review: null,
   },
   mutations: {
     SEARCH_MOVIE: function (state, movieList) {
@@ -65,7 +69,20 @@ export default new Vuex.Store({
         state.recommendList = state.recommendList.concat(newMovieSet)
       }
       // console.log(state.recommendList)
-    }
+    },
+    GET_IMAGES: function (state, filePath) {
+      for (const path of filePath) {
+        state.backdropsImg.push(path.file_path)
+      }
+      // console.log(state.backdropsImg)
+    },
+    GET_REVIEWS: function (state, reviews) {
+      state.reviews = reviews
+      // console.log(state.reviews)
+    },
+    GET_REVIEW_DETAIL: function (state, review) {
+      state.review = review
+    },
   },
   actions: {
     searchMovie: function ({ commit }, inputText) {
@@ -152,8 +169,63 @@ export default new Vuex.Store({
           console.log(err)
         })
       }
-    }
+    },
+    getImages: function ({ commit }, movieId) {
+      this.state.backdropsImg = []
+      axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/movie/${movieId}/images?api_key=7ecf0fa910e1bacb146ddf503cf3ec72`
+      })
+      .then(res => {
+        // console.log(res.data.backdrops)
+        commit('GET_IMAGES', res.data.backdrops)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+    getReviews: function ({ commit }) {
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/community/reviews/'
+      })
+      .then(res => {
+        commit('GET_REVIEWS', res.data)
+      })
+    },
+    getReviewDetail: function ({ commit }, reviewPk) {
+      axios({
+        method: 'get',
+        url: `http://127.0.0.1:8000/community/review/${reviewPk}`
+      })
+      .then(res => {
+        commit('GET_REVIEW_DETAIL', res.data)
+      })
+    },
+    // 진짜 모르겠다. 여기 질문한번 해야할듯
+    // createReview: function ({ commit }, data) {
+    //   console.log(data)
+    //   const reviewItem = {
+    //     title: data.title,
+    //     movie_title: data.movieTitle,
+    //     rank: data.value,
+    //     content: data.text,
+    //   }
+    //   axios({
+    //     method: 'post',
+    //     url: 'http://127.0.0.1:8000/community/reviews/',
+    //     data: reviewItem,
+    //   })
+    //   .then(res => {
+    //     if (res.status === 201) {
+    //       commit('CREATE_REVIEW', res.data)
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+    // }
   },
   modules: {
-  }
+  },
 })

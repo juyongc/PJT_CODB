@@ -1,13 +1,12 @@
 <template>
   <div>
-    <h4>*{{this.movieName.movieNm}}</h4>
-    <img :src="imgURL" alt="">
-    <!-- <span>
-      Director: {{this.moviePoster[0]['director']}}
-      Actor: {{this.moviePoster[0]['actor']}}
-      Rating: {{this.moviePoster[0]['userRating']}}
-    </span> -->
-    <p>{{this.moviePoster[0]}}</p>
+    <!-- <h4>*{{this.movieName.movieNm}}</h4>
+    <img :src="imgURL" alt=""> -->
+    <b-carousel-slide>
+      <template #img>
+        <img :src="imgURL">
+      </template>
+    </b-carousel-slide>
   </div>
 </template>
 
@@ -34,7 +33,7 @@ export default {
       // NAVER는 postman은 서치되는데 CORS 해결해야함....
       // client에서 해결방법은 proxy 서버를 구성하면 된다는데
       // 임시방편 느낌이 강함 - 내일 질문하기
-      console.log(this.movieName.movieNm)
+      // console.log(this.movieName.movieNm)
 
       axios({
         method: 'POST',
@@ -79,5 +78,8 @@ export default {
 </script>
 
 <style>
-
+/* .carousel-item img {
+  width: 10vh !important ;
+  height: 10vh !important;
+} */
 </style>

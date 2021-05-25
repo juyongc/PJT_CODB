@@ -5,8 +5,13 @@ import Recommendation from '@/views/Recommendation.vue'
 import SearchMovieList from '@/views/SearchMovieList.vue'
 import SearchMovieDetail from '@/views/SearchMovieDetail.vue'
 import ChoiceMovie from '@/views/ChoiceMovie.vue'
+import Reviews from '@/views/community/ReviewList.vue'
+import ReviewDetail from '@/views/community/ReviewListItem.vue'
+import CreateReview from '@/views/community/CreateReview.vue'
+import UpdateReview from '@/views/community/UpdateReview.vue'
 import Login from '@/views/Login.vue'
 import Signup from '@/views/Signup.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,6 +39,26 @@ const routes = [
     path: '/recommendation/choice',
     name: 'ChoiceMovie',
     component: ChoiceMovie,
+  },
+  {
+    path: '/reviews',
+    name: 'Reviews',
+    component: Reviews,
+  },
+  {
+    path: '/reviews/:pk',
+    name: 'ReviewDetail',
+    component: ReviewDetail,
+  },
+  {
+    path: '/reviews/create',
+    name: 'CreateReview',
+    component: CreateReview,
+  },
+  {
+    path: '/review/:pk/update',
+    name: 'UpdateReview',
+    component: UpdateReview,
   },
   {
     path: '/login',

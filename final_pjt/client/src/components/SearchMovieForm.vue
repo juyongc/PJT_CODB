@@ -1,13 +1,12 @@
 <template>
-  <form class="row g-3">
-    <div class="col-sm-10">
+  <form class="row">
+    <div class="col-11">
       <input 
         type="search" 
         v-model="inputText" 
         @keyup.enter="searchMovie" 
         @input="searchingMovie"
-        class="form-control me-2 "
-        name='searchingList' 
+        class="form-control mx-2 "
         list='searchingList'
         placeholder="Search"
       >
@@ -15,11 +14,13 @@
         <option
           v-for="movie in searchingMovies"
           :key="movie.id"
-        >{{ movie.title }}</option>
+        >
+          {{ movie.title }}
+        </option>
       </datalist>
     </div>
-    <div class="col-sm-2">
-      <button @click="searchMovie" class="btn btn-outline-dark">검색</button>
+    <div class="col-1">
+      <button @click="searchMovie" class="btn btn-outline-dark btn-sm">검색</button>
     </div>
   </form>
 </template>

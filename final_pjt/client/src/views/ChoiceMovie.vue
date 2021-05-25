@@ -1,11 +1,14 @@
 <template>
   <div>
     <h3>좋아하는 영화를 선택하세요</h3>
-    <ChoiceMovieItem
-      v-for="movie in movies"
-      :key="movie.id"
-      :movie="movie"
-    />
+    <!-- 선택한 영화들을 한 눈에 볼 수 있는 리스트? 필요 -->
+    <div class="row row-cols-1 row-cols-md-4 g-4">  
+      <ChoiceMovieItem
+        v-for="movie in movies"
+        :key="movie.id"
+        :movie="movie"
+      />
+    </div>
     <button v-if="this.$store.state.page > 1" @click="previousPage">이전 페이지</button>
     <button @click="nextPage">다음 페이지</button>
     <hr>
