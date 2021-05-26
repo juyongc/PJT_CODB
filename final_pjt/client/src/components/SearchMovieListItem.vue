@@ -45,12 +45,6 @@ export default {
     }
   },
   methods:{
-    clickList: function () {
-      // const index = this.$store.state.searchs.indexOf(this.movie)
-      // this.$router.push({ name: 'SearchMovieDetail', params: { index: index, title: this.movie.title }})
-      this.$store.dispatch('searchDetail', this.movie.id)
-      // this.$router.push({ name: 'SearchMovieDetail', params: { title: this.movie.title }})
-    },
     showModal: function () {
       this.isModal = true
       this.$store.dispatch('getImages', this.movie.id)

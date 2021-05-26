@@ -14,7 +14,7 @@ from .serializers import ReviewListSerializer, ReviewSerializer, CommentSerializ
 @permission_classes([IsAuthenticated])
 def reviews(request):
     if request.method == 'GET':
-        review_list = get_list_or_404(Review)
+        review_list = Review.objects.all()
         serializer = ReviewListSerializer(review_list, many=True)
         return Response(serializer.data)
     else:

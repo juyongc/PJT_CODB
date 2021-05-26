@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
 // import router from 'src/router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState(),
-  ],
+  // plugins: [
+  //   createPersistedState(),
+  // ],
   state: {
     currentMovieList: [],
     searchs: [],
@@ -135,7 +135,7 @@ export default new Vuex.Store({
       })
       .then(res => {
         commit('SEARCHING_MOVIE', res.data.results)
-        console.log(res)
+        // console.log(res)
       })
       .catch(err => {
         console.log(err)
@@ -166,17 +166,14 @@ export default new Vuex.Store({
     updateChoice: function ({ commit }, movie) {
       commit('UPDATE_CHOICE', movie)      
     },
-    makeRecommendation: function ({ commit }) {
+    makeRecommendation: function ({ commit }, similar) {
       this.state.recommendList = []
-      // console.log(this.state.myChoice)
-      for (let movie of this.state.myChoice) {
-        // console.log(movieId)
+      for (let movie of similar) {
         axios({
           method: 'get',
-          url: `https://api.themoviedb.org/3/movie/${movie.id}/similar?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=1`
+          url: `https://api.themoviedb.org/3/movie/${movie.movieid}/similar?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=1`
         })
         .then(res => {
-          // console.log(res.data.results)
           commit('MAKE_RECOMMENDATION', res.data.results)
         })
         .catch(err => {

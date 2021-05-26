@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="CreateReview">
     <h2 class="mb-3">새로운 리뷰 작성</h2>
     <button @click="backToList">돌아가기</button>
     <b-form v-if="show">
@@ -10,7 +10,7 @@
         class="mb-3"
       >
         <b-form-input
-          id="title"
+          id="title-input"
           v-model="form.title"
           type="text"
           placeholder="Title"
@@ -35,9 +35,7 @@
         ></b-form-input>
         <b-form-datalist 
           id="searchingList" 
-          :options="movie.title"
-          v-for="movie in searchingMovies"
-          :key="movie.id"
+          :options="this.$store.state.searchingList"
         >
         </b-form-datalist>
       </b-form-group>
@@ -91,6 +89,13 @@ export default {
     }
   },
   methods: {
+    searchingMovie: function () {
+      if (this.form.movieTitle){
+        if (this.form.movieTitle.length > 1) {
+          this.$store.dispatch('searchingMovie', this.form.movieTitle)
+        }
+      }
+    },
     onSubmit: function (event) {
       event.preventDefault()
       // this.$store.dispatch('createReview', this.form)
@@ -135,13 +140,10 @@ export default {
     backToList: function () {
       this.$router.push({ name: "Reviews" })
     },
-    searchingMovie: function () {
-      console.log(this.inputText)
-      if (this.form.movieTitle){
-        if (this.form.movieTitle.length > 1) {
-          this.$store.dispatch('searchingMovie', this.form.movieTitle)
-        }
-      }
+  },
+  computed: {
+    searchingMovies: function () {
+      return this.$store.state.searchingList
     }
   },
   created: function () {
@@ -154,5 +156,10 @@ export default {
 </script>
 
 <style>
-
+#CreateReview {
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  padding-top: 5vh !important;
+  padding-bottom: 5vh !important;
+}
 </style>

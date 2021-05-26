@@ -3,7 +3,7 @@
     <div class="card h-100">
       <img v-b-modal="movie.title" @click="showModal" :src="movie_poster" alt="" class="card-img img-fluid">
       <Modal 
-        v-if="isModal" 
+        v-if="isModal && this.$store.state.credits" 
         :movie="movie"
         @close-modal="isModal = false"
       />

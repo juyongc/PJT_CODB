@@ -37,11 +37,16 @@
       </template>
       <div v-if="this.$store.state.credits">
         <p>{{ movie.overview }}</p>
+
         <span class="fw-bold">Director: </span>
-        <span v-for="crew in crews" :key="crew.credit_id">{{ crew.name }}, </span>
+        <div class="d-inline" v-for="crew in this.$store.state.credits.crew" :key="crew.credit_id">
+          <span v-if="crew.department === 'Directing'">{{ crew.name }}, </span>
+        </div>
         <br>
         <span class="fw-bold">Stars: </span>
-        <span v-for="cast in casts" :key="cast.credit_id">{{ cast.name }}, </span>
+        <div class="d-inline" v-for="cast in this.$store.state.credits.cast" :key="cast.credit_id">
+          <span v-if="cast.popularity > 5">{{ cast.name }}, </span>
+        </div>
       </div>
 
     </div>
@@ -98,7 +103,7 @@ export default {
       })
     },
     goReviews: function () {
-      this.$router.push({ name: 'Reviews' })
+      this.$router.push({ name: 'CreateReview' })
     }
   },
   created() {
@@ -125,16 +130,16 @@ export default {
       const imgs = this.$store.state.backdropsImg.map(x => 'https://www.themoviedb.org/t/p/original/' + x)
       return imgs
     },
-    casts: function () {
-      return this.$store.state.credits.cast.filter(function (cast) {
-        return cast.popularity > 5
-      })
-    },
-    crews: function () {
-      return this.$store.state.credits.crew.filter(function (crew) {
-        return crew.department === 'Directing'
-      })
-    }
+    // casts: function () {
+    //   return this.$store.state.credits.cast.filter(function (cast) {
+    //     return cast.popularity > 5
+    //   })
+    // },
+    // crews: function () {
+    //   return this.$store.state.credits.crew.filter(function (crew) {
+    //     return crew.department === 'Directing'
+    //   })
+    // }
   },
 }
 </script>

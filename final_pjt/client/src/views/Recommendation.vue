@@ -4,11 +4,11 @@
     <div v-if="movies.length > 0">
       <div class="d-grid gap-2 d-md-block">
         <button @click="reload" type="button" class="btn btn-secondary">Other Featured Movies</button>
-        <button @click="choiceMovie" type="button" class="btn btn-secondary">To get more recommendations</button>
+        <!-- <button @click="choiceMovie" type="button" class="btn btn-secondary">To get more recommendations</button> -->
       </div>
       <div class="container-fluid">
         <RecommendationItem
-          v-for="(movie, index) in movies.slice(0, 20)"
+          v-for="(movie, index) in movies.slice(0, 10)"
           :key="index"
           :movie="movie"
         />
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import RecommendationItem from '@/components/RecommendationItem'
 import _ from 'lodash'
 
@@ -39,6 +40,13 @@ export default {
     }
   },
   methods: {
+    setToken: function () {
+      const token = localStorage.getItem('jwt')
+      const config = {
+        Authorization: `JWT ${token}`
+      }
+      return config
+    },
     choiceMovie: function () {
       this.$store.dispatch('choiceMovie', this.$store.state.page)
       this.$router.push({ name: 'ChoiceMovie' })
@@ -56,6 +64,15 @@ export default {
     else {
       this.$router.push({ name: 'Login' })
     }
+    axios({
+      method: 'get',
+      url: 'http://127.0.0.1:8000/accounts/',
+      headers: this.setToken()
+    })
+    .then((res) => {
+      const similar = res.data
+      this.$store.dispatch('makeRecommendation', similar)
+    })
   }
 }
 </script>

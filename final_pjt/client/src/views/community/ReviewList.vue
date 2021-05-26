@@ -6,15 +6,21 @@
       <button class="btn btn-secondary mb-4 d-inline" @click="createReview">New Review</button>
     </div>
 
-    <div class="list-group" v-for="review in reviews" :key="review.pk">
-      <a @click="getReviewDetail(review)" class="list-group-item list-group-item-action">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ review.title }}</h5>
-          <small>{{ ago(review.created_at) }}</small>
-        </div>
-        <p class="mb-1">{{ review.movie_title }}</p>
-        <small>{{ review.username }} | {{ review.comment_count }}</small>
-      </a>
+    <div v-if="reviews.length > 0">
+      <div class="list-group" v-for="review in reviews" :key="review.pk">
+        <a @click="getReviewDetail(review)" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{ review.title }}</h5>
+            <small>{{ ago(review.created_at) }}</small>
+          </div>
+          <p class="mb-1">{{ review.movie_title }}</p>
+          <small>{{ review.username }} | {{ review.comment_count }}</small>
+        </a>
+      </div>
+    </div>
+
+    <div v-else>
+      <p>등록된 글이 없습니다.</p>
     </div>
 
     <!-- <ul>

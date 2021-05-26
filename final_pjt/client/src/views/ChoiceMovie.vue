@@ -1,10 +1,16 @@
 <template>
   <div id="ChoiceMovie">
-    <div class="d-flex justify-content-between my-4">
-      <h2 class="d-inline">Choose your favorite movie</h2>
-      <button type="button" class="btn btn-secondary mb-4 d-inline" @click="completedChoice">Selection done</button>
+    <h2 class="mb-4">Choose your favorite movie</h2>
+    <button class="btn btn-secondary" @click="goRecommendation">좋아하는 영화 다 골랐어</button>
+    <div class="container-fluid">
+      <ChoiceMovieItem
+        v-for="movie in movies"
+        :key="movie.id"
+        :movie="movie"
+      />
     </div>
-    <div class="row">
+
+    <!-- <div class="row">
       <div class="sidebar order-md-last col-12 col-md-2 ">
         <h4>Selected movie</h4>
         <ul class="list-group" v-for="myMovie in myChoice" :key="myMovie.id">
@@ -20,7 +26,7 @@
           />
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="pagination justify-content-center my-4">
       <button v-if="this.$store.state.page > 1" type="button" class="btn btn-outline-primary" @click="previousPage">&lt;</button>
@@ -51,6 +57,9 @@ export default {
     }
   },
   methods: {
+    goRecommendation: function () {
+      this.$router.push({ name: 'Recommendation'})
+    },
     previousPage: function () {
       this.$store.commit('PREVIOUS_PAGE')
       this.$store.dispatch('choiceMovie', this.$store.state.page)

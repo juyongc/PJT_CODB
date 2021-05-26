@@ -1,17 +1,34 @@
 <template>
-  <div class="col-12 col-sm-6 col-md-3 col-lg-2">
-    <div class="card">
-        <img class="card-img" :src="movie_poster" alt="movie poster">
-      <div class="card-img-overlay">
-        <input type="checkbox" class="form-check-input" @click="updateChoice" :id="movie.id" :checked="inMyList">
-        <label class="form-check-label" :for="movie.id"></label>
+  <div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 mt-3">
+          <div class="card" v-b-modal="movie.title" @click="showModal">
+            <div class="row g-0">
+              <div class="col-md-2">
+                <img class="card-img-left img-fluid" :src="movie_poster" alt="movie poster">
+              </div>
+              <div class="col-md-10 p-3">
+                <h4 class="card-title">{{ movie.title }}</h4>
+                <p class="text-muted">{{ movie.release_date }}</p>
+                <p class="card-text">{{ movie.overview }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <Modal 
+      v-if="isModal" 
+      :movie="movie"
+      @close-modal="isModal = false"/>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import Modal from '@/components/Modal.vue'
+
 export default {
   name: 'ChoiceMovieItem',
   props: {
@@ -19,48 +36,20 @@ export default {
       type: Object,
     }
   },
+  components: {
+    Modal,
+  },
   data: function () {
     return {
-      inMyList: false,
+      isModal: false,
     }
   },
   methods: {
-    updateChoice: function () {
-      this.$store.dispatch('updateChoice', this.movie)
+    showModal: function () {
+      this.isModal = true
+      this.$store.dispatch('getImages', this.movie.id)
+      this.$store.dispatch('getCredits', this.movie.id)
     },
-    // recommend header용
-    setToken: function () {
-      const token = localStorage.getItem('jwt')
-      const config = {
-        Authorization: `JWT ${token}`
-      }
-      return config
-    },
-  },
-  // created: function () {
-  //   if (this.$store.state.myChoice.includes(this.movie)) {
-  //     this.inMyList = true
-  //   }
-  //   else {
-  //     this.inMyList = false
-  //   }
-  // },
-
-  // 새로 만든 created
-  created() {
-    axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/movies/recommend/',
-        data: {
-          title: this.movie.title,
-          recommend_movieid: this.movie.id,
-          recommend_poster: this.movie.poster_path
-        },
-        headers: this.setToken()
-      })
-      .then((res) => {
-        console.log(res.data)
-      })
   },
   computed: {
     movie_poster: function () {
