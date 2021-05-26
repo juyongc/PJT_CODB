@@ -27,7 +27,7 @@
                   <router-link class="dropdown-item" v-else :to="{ name: 'Login' }">Login</router-link>
                 </li>
                 <li><hr class="dropdown-divider"></li>
-                <li><router-link class="dropdown-item" :to="{ name: 'Login' }">Profile</router-link></li>
+                <li><router-link class="dropdown-item" :to="{ name: 'Watchlist' }">Watchlist</router-link></li>
               </ul>
             </li>
           </ul>
