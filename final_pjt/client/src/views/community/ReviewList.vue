@@ -1,18 +1,34 @@
 <template>
-  <div>
-    <h2>커뮤니티</h2>
-    <button @click="createReview">글 쓰기</button>
-    <ul>
+  <div id="ReivewList">
+
+    <div class="d-flex justify-content-between my-4">
+      <h2 class="d-inline">Movie Review Community</h2>
+      <button class="btn btn-secondary mb-4 d-inline" @click="createReview">New Review</button>
+    </div>
+
+    <div class="list-group" v-for="review in reviews" :key="review.pk">
+      <a @click="getReviewDetail(review)" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ review.title }}</h5>
+          <small>{{ review.created_at }}</small>
+        </div>
+        <p class="mb-1">{{ review.movie_title }}</p>
+        <small>{{ review.user }} | {{ review.comment_count }}</small>
+      </a>
+    </div>
+
+    <!-- <ul>
       <li v-for="review in reviews" :key="review.pk" @click="getReviewDetail(review)">
         <h3>제목 : {{ review.title }} ({{ review.comment_count }})</h3>
         <h4>리뷰 대상 영화 : {{ review.movie_title }}</h4>
-        <!-- <h5 class="text-muted"> 유저 번호 : {{ review.user }}</h5> -->
+        <h5 class="text-muted"> 유저 번호 : {{ review.user }}</h5>
         <p>{{ review.pk }}</p>
         <p></p>
         <hr>
       </li>
-    </ul>
+    </ul> -->
   </div>
+
 </template>
 
 <script>
@@ -22,7 +38,7 @@ export default {
   name: 'ReviewList',
   methods: {
     getReviewDetail: function (review) {
-      this.$store.dispatch('getReviewDetail', review.pk)
+      // this.$store.dispatch('getReviewDetail', review.pk)
       this.$router.push({ name: "ReviewDetail", params: { pk: review.pk }})
     },
     createReview: function () {
@@ -38,11 +54,21 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('getReviews')
+    if (this.$store.state.isLogin) {
+      this.$store.dispatch('getReviews')
+    }
+    else {
+      this.$router.push({ name: 'Login' })
+    }
   },
 }
 </script>
 
 <style>
-
+#ReivewList {
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  padding-top: 5vh !important;
+  padding-bottom: 5vh !important;
+}
 </style>

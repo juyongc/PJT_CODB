@@ -7,11 +7,11 @@
     </div>
     <div>
       <label for="password">패스워드: </label>
-      <input type="text" id="password" v-model="credentials.password">
+      <input type="password" id="password" v-model="credentials.password">
     </div>
     <div>
       <label for="passwordConfirmation">패스워드 확인: </label>
-      <input type="text" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
+      <input type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
     </div>
     <button @click="signup(credentials)">확인</button>
   </div>

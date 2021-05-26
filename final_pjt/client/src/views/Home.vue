@@ -21,3 +21,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.home {
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  padding-top: 5vh !important;
+  padding-bottom: 5vh !important;
+}
+</style>

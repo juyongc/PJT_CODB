@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <h2>검색 결과</h2>
+  <div id="SerchMovie">
+    <h2 class="mb-4">Search Results</h2>
 
-    <div class="row row-cols-1">
+    <div class="container-fluid">
       <SearchMovieListItem
         v-for="(movie, idx) in movies"
         :key="idx"
@@ -29,5 +29,10 @@ export default {
 </script>
 
 <style>
-
+#SerchMovie {
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  padding-top: 5vh !important;
+  padding-bottom: 5vh !important;
+}
 </style>

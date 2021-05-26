@@ -46,17 +46,18 @@ const routes = [
     component: Reviews,
   },
   {
-    path: '/reviews/:pk',
-    name: 'ReviewDetail',
-    component: ReviewDetail,
-  },
-  {
     path: '/reviews/create',
     name: 'CreateReview',
     component: CreateReview,
   },
   {
-    path: '/review/:pk/update',
+    path: '/reviews/:pk',
+    name: 'ReviewDetail',
+    component: ReviewDetail,
+    props: true,
+  },
+  {
+    path: '/reviews/:pk/update',
     name: 'UpdateReview',
     component: UpdateReview,
   },

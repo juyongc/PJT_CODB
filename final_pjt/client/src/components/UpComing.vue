@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2 class="text-center my-4">개봉 예정작</h2>
-    <div class="row g-3 mx-3">
+    <div class="row g-2">
       <UpComingItem
         v-for="movie in movies"
         :key="movie.id"

@@ -1,10 +1,12 @@
 <template>
-  <div class="Recommendation">
-    <h2>추천 영화</h2>
+  <div id="Recommendation">
+    <h2 class="mb-4">Featured Movie</h2>
     <div v-if="movies.length > 0">
-      <h3>추천 영화 목록</h3>
-      <button @click="reload">다른 추천 영화 보기</button>
-      <div>
+      <div class="d-grid gap-2 d-md-block">
+        <button @click="reload" type="button" class="btn btn-secondary">Other Featured Movies</button>
+        <button @click="choiceMovie" type="button" class="btn btn-secondary">To get more recommendations</button>
+      </div>
+      <div class="container-fluid">
         <RecommendationItem
           v-for="(movie, index) in movies.slice(0, 20)"
           :key="index"
@@ -12,15 +14,12 @@
         />
       </div>
       <hr>
-      <p @click="choiceMovie">좋아하는 영화 추가하기</p>
     </div>
-    <div v-else @click="choiceMovie">
+    <div v-else>
       <p>
-        추천하기 위한 데이터가 부족합니다, 
+        There is not enough data to recommend, Choose your favorite movie and get featured movies!
       </p>
-      <p>
-        좋아하는 영화를 선택해 추천 영화를 받아보세요!
-      </p>
+      <button @click="choiceMovie" type="button" class="btn btn-secondary">To get more recommendations</button>
     </div>
   </div>
 </template>
@@ -50,11 +49,20 @@ export default {
   },
   created: function () {
     // this.$store.state.recommendList = []
+    // this.$store.state.myChoice = []
   }
 }
 </script>
 
-<style>
-
+<style scoped>
+#Recommendation {
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  padding-top: 5vh !important;
+  padding-bottom: 5vh !important;
+}
+button {
+  margin-right: .5rem !important;
+}
 </style>
 

@@ -1,11 +1,13 @@
 <template>
-  <div class="col-3">
-    <img v-b-modal="movie.title" @click="showModal" :src="movie_poster" alt="" class="img-fluid img-thumbnail">
-
-    <Modal 
-    v-if="isModal" 
-    :movie="movie"
-    @close-modal="isModal = false"/>
+  <div class="col-6 col-md-3 col-lg-2">
+    <div class="card h-100">
+      <img v-b-modal="movie.title" @click="showModal" :src="movie_poster" alt="" class="card-img img-fluid">
+      <Modal 
+        v-if="isModal" 
+        :movie="movie"
+        @close-modal="isModal = false"
+      />
+    </div>
   </div>
 </template>
 
@@ -36,6 +38,7 @@ export default {
     showModal: function () {
       this.isModal = true
       this.$store.dispatch('getImages', this.movie.id)
+      this.$store.dispatch('getCredits', this.movie.id)
     },
   },
   computed: {
@@ -47,5 +50,7 @@ export default {
 </script>
 
 <style>
-
+img {
+  max-height: 100% !important;
+}
 </style>

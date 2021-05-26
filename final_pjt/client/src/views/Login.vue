@@ -9,7 +9,7 @@
     <div class='text-center'>
       <!-- <label for="password">패스워드: </label>
       <input type="text" id="password"  v-model="credentials.password"> -->
-      <input type="text" placeholder=" 비밀번호"  v-model="credentials.password">
+      <input type="password" placeholder=" 비밀번호"  v-model="credentials.password">
     </div>
     <div class='d-grid gap-2 col-4 mx-auto text-center'>
       <button class="btn btn-lg btn-primary" @click="login">로그인</button>
@@ -20,6 +20,7 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   name: 'Login',
   data: function () {
@@ -41,7 +42,7 @@ export default {
         data: this.credentials,
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         localStorage.setItem('jwt', res.data.token)
         this.$emit('login')
         this.$router.push({ name: 'Home' })

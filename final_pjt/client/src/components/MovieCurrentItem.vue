@@ -1,12 +1,21 @@
 <template>
-  <div>
-    <!-- <h4>*{{this.movieName.movieNm}}</h4>
-    <img :src="imgURL" alt=""> -->
-    <b-carousel-slide>
+  <div class="card">
+    <!-- <h4>*{{this.movieName.movieNm}}</h4> -->
+    <img :src="imgURL" alt="">
+    <div class="card-body">
+      <h5 class="card-title">여기까지 좌측 사용</h5>
+      <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+    </div>
+    <!-- <div class="carousel-item active">
+      <img :src="imgURL" class="d-block w-10" alt="">
+    </div> -->
+    
+
+    <!-- <b-carousel-slide>
       <template #img>
         <img :src="imgURL">
       </template>
-    </b-carousel-slide>
+    </b-carousel-slide> -->
   </div>
 </template>
 
@@ -45,6 +54,7 @@ export default {
         this.moviePoster = response.data
         this.moviePosters.push(this.moviePoster[0])
         this.imgURL = this.moviePoster[0]['image']
+        // console.log(this.imgURL)
         return this.imgURL
       }).catch(error => {
         return console.log(error)
@@ -82,4 +92,5 @@ export default {
   width: 10vh !important ;
   height: 10vh !important;
 } */
+
 </style>

@@ -9,7 +9,7 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
         # Validation 시 필수값에서 제외
-        read_only_fields = ('review',)
+        read_only_fields = ('review', 'user')
 
 
 # List 불러올때 사용하는 Serializer
@@ -19,7 +19,7 @@ class ReviewListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('pk', 'title', 'movie_title', 'comment_count')
+        fields = ('pk', 'title', 'movie_title', 'comment_count', 'created_at', 'user')
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -31,3 +31,4 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = '__all__'
+        read_only_fields = ('user',)
