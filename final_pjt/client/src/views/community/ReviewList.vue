@@ -10,10 +10,10 @@
       <a @click="getReviewDetail(review)" class="list-group-item list-group-item-action">
         <div class="d-flex w-100 justify-content-between">
           <h5 class="mb-1">{{ review.title }}</h5>
-          <small>{{ review.created_at }}</small>
+          <small>{{ ago(review.created_at) }}</small>
         </div>
         <p class="mb-1">{{ review.movie_title }}</p>
-        <small>{{ review.user }} | {{ review.comment_count }}</small>
+        <small>{{ review.username }} | {{ review.comment_count }}</small>
       </a>
     </div>
 
@@ -37,6 +37,27 @@
 export default {
   name: 'ReviewList',
   methods: {
+    ago: function (time) {
+      const today = new Date();
+      const timeValue = new Date(time);
+
+      const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+      if (betweenTime < 1) return 'just now';
+      if (betweenTime < 60) {
+          return `${betweenTime} minutes ago`;
+      }
+
+      const betweenTimeHour = Math.floor(betweenTime / 60);
+      if (betweenTimeHour < 24) {
+          return `${betweenTimeHour} hours ago`;
+      }
+
+      const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+      if (betweenTimeDay < 365) {
+          return `${betweenTimeDay} days ago`;
+      }
+      return `${Math.floor(betweenTimeDay / 365)} years ago`;
+    },
     getReviewDetail: function (review) {
       // this.$store.dispatch('getReviewDetail', review.pk)
       this.$router.push({ name: "ReviewDetail", params: { pk: review.pk }})

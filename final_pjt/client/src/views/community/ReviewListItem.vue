@@ -2,9 +2,9 @@
   <div>
     <h2>제목 : {{ review.title }}</h2>
     <h4 class="text-muted">영화 제목 : {{ review.movie_title }}</h4>
-    <h5 class="text-muted">작성자 {{ review.user }}: | 평가 점수 {{ review.rank }}</h5>
-    <h5 class="text-muted">작성 시간 : {{ review.created_at }}</h5>
-    <h5 class="text-muted">수정 시간 : {{ review.updated_at }}</h5>
+    <h5 class="text-muted">작성자 {{ review.username }}: | 평가 점수 {{ review.rank }}</h5>
+    <h5 class="text-muted">작성 시간 : {{ ago(review.created_at) }}</h5>
+    <h5 class="text-muted">수정 시간 : {{ ago(review.updated_at) }}</h5>
     <p>{{ review.content }}</p>
     
     <div v-show="review.isEqual">
@@ -57,6 +57,27 @@ export default {
     }
   },
   methods: {
+    ago: function (time) {
+      const today = new Date();
+      const timeValue = new Date(time);
+
+      const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+      if (betweenTime < 1) return 'just now';
+      if (betweenTime < 60) {
+          return `${betweenTime} minutes ago`;
+      }
+
+      const betweenTimeHour = Math.floor(betweenTime / 60);
+      if (betweenTimeHour < 24) {
+          return `${betweenTimeHour} hours ago`;
+      }
+
+      const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+      if (betweenTimeDay < 365) {
+          return `${betweenTimeDay} days ago`;
+      }
+      return `${Math.floor(betweenTimeDay / 365)} years ago`;
+    },
     backToList: function () {
       this.$router.push({ name: "Reviews" })
     },
@@ -112,7 +133,7 @@ export default {
   computed: {
     review: function () {
       return this.$store.state.review
-    }
+    },
   },
   created: function () {
     if (!this.$store.state.isLogin) {

@@ -30,7 +30,16 @@
           type="text"
           placeholder="Movie title"
           required
+          @input="searchingMovie"
+          list='searchingList'
         ></b-form-input>
+        <b-form-datalist 
+          id="searchingList" 
+          :options="movie.title"
+          v-for="movie in searchingMovies"
+          :key="movie.id"
+        >
+        </b-form-datalist>
       </b-form-group>
 
       <b-form-group class="mb-3">  
@@ -41,7 +50,7 @@
           </b-input-group-prepend>
           <b-form-rating id="rating" v-model="form.value" stars="10"></b-form-rating>
           <b-input-group-append>
-            <b-input-group-text class="justify-content-center" style="min-width: 3em;">
+            <b-input-group-text class="justify-content-center" style="min-width: 3em;" required>
               {{ form.value }}
             </b-input-group-text>
           </b-input-group-append>
@@ -55,6 +64,7 @@
           v-model="form.text"
           placeholder="Content"
           rows="8"
+          required
         ></b-form-textarea>
       </b-form-group>
 
@@ -125,6 +135,14 @@ export default {
     backToList: function () {
       this.$router.push({ name: "Reviews" })
     },
+    searchingMovie: function () {
+      console.log(this.inputText)
+      if (this.form.movieTitle){
+        if (this.form.movieTitle.length > 1) {
+          this.$store.dispatch('searchingMovie', this.form.movieTitle)
+        }
+      }
+    }
   },
   created: function () {
     if (!this.$store.state.isLogin) {

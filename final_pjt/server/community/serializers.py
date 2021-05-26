@@ -3,6 +3,7 @@ from .models import Review, Comment
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
 
     class Meta:
         model = Comment
@@ -11,15 +12,22 @@ class CommentSerializer(serializers.ModelSerializer):
         # Validation 시 필수값에서 제외
         read_only_fields = ('review', 'user')
 
+    def get_username(self, obj):
+        return obj.user.username
+
 
 # List 불러올때 사용하는 Serializer
 class ReviewListSerializer(serializers.ModelSerializer):
     # comments = CommentSerializer(many=True, read_only=True)
     comment_count = serializers.IntegerField(source='comments.count', read_only=True)
+    username = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
-        fields = ('pk', 'title', 'movie_title', 'comment_count', 'created_at', 'user')
+        fields = ('pk', 'title', 'movie_title', 'comment_count', 'created_at', 'user', 'username')
+
+    def get_username(self, obj):
+        return obj.user.username
 
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -27,8 +35,12 @@ class ReviewSerializer(serializers.ModelSerializer):
     # comments = serializers.PrimaryKeyRelatedField(read_only=True, many=True)
     comments = CommentSerializer(many=True, read_only=True)
     comment_count = serializers.IntegerField(source='comments.count', read_only=True)
+    username = serializers.SerializerMethodField()
 
     class Meta:
         model = Review
         fields = '__all__'
         read_only_fields = ('user',)
+    
+    def get_username(self, obj):
+        return obj.user.username
