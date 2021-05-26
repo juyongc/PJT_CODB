@@ -30,11 +30,11 @@ export default {
     }
   },
   methods: {
-    searchMovie: function () {
-      // console.log(this.movie.title)
-      this.$store.dispatch('searchDetail', this.movie.id)
-      this.$router.push({ name: 'SearchMovieDetail', params: { title: this.movie.title }})
-    },
+    // searchMovie: function () {
+    //   // console.log(this.movie.title)
+    //   this.$store.dispatch('searchDetail', this.movie.id)
+    //   this.$router.push({ name: 'SearchMovieDetail', params: { title: this.movie.title }})
+    // },
     showModal: function () {
       this.isModal = true
       this.$store.dispatch('getImages', this.movie.id)

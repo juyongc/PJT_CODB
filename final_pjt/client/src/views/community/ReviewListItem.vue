@@ -43,11 +43,11 @@ import Comments from '@/components/Comments.vue'
 
 export default {
   name: 'ReviewListItem',
-  props: {
-    pk: {
-      type: Number,
-    }
-  },
+  // props: {
+  //   pk: {
+  //     type: Number,
+  //   }
+  // },
   components: {
     Comments,
   },
@@ -118,8 +118,8 @@ export default {
     if (!this.$store.state.isLogin) {
       this.$router.push({ name: 'Login' })
     }
-    this.$store.dispatch('getReviewDetail', this.pk)
-    console.log(this.review)
+    this.$store.dispatch('getReviewDetail', this.$route.params.pk)
+    // console.log(this.review)
   }
 }
 </script>

@@ -37,6 +37,7 @@ export default {
     showModal: function () {
       this.isModal = true
       this.$store.dispatch('getImages', this.movie.movieid)
+      this.$store.dispatch('getCredits', this.movie.movieid)
     },
   },
   created() {
@@ -45,5 +46,8 @@ export default {
 }
 </script>
 <style>
-
+.movieImg {
+  width: 10%;
+  height: auto;
+}
 </style>

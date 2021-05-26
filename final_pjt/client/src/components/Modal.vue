@@ -35,18 +35,14 @@
           </b-carousel>
         </div>
       </template>
-      <p>{{ movie.overview }}</p>
-      <span class="fw-bold">Director: </span>
-      <span 
-        v-for="crew in crews" 
-        :key="crew.credit_id"
-      >{{ crew.name }}, </span>
-      <br>
-      <span class="fw-bold">Stars: </span>
-      <span
-        v-for="cast in casts"
-        :key="cast.credit_id"  
-      >{{ cast.name }}, </span>
+      <div v-if="this.$store.state.credits">
+        <p>{{ movie.overview }}</p>
+        <span class="fw-bold">Director: </span>
+        <span v-for="crew in crews" :key="crew.credit_id">{{ crew.name }}, </span>
+        <br>
+        <span class="fw-bold">Stars: </span>
+        <span v-for="cast in casts" :key="cast.credit_id">{{ cast.name }}, </span>
+      </div>
 
     </div>
     <template #modal-footer="{ ok, close }">
@@ -106,6 +102,7 @@ export default {
     }
   },
   created() {
+    console.log(this.movie)
     axios({
         method: 'post',
         url: 'http://127.0.0.1:8000/accounts/check/',
@@ -118,6 +115,9 @@ export default {
       })
       .then((res) => {
         this.like = res.data
+      })
+      .catch(err => {
+        alert(err)
       })
   },
   computed: {

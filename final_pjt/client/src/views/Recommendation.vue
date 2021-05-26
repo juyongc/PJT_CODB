@@ -50,6 +50,12 @@ export default {
   created: function () {
     // this.$store.state.recommendList = []
     // this.$store.state.myChoice = []
+    if (this.$store.state.isLogin) {
+      this.$store.dispatch('getReviews')
+    }
+    else {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>

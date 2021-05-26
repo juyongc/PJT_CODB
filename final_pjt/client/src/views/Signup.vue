@@ -53,8 +53,8 @@ export default {
         url: 'http://127.0.0.1:8000/accounts/signup/',
         data: credentials,
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
+        // console.log(res)
         this.$router.push({ name: 'Login' })
       })
       .catch(error => {

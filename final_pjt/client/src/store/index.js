@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-// import createPersistedState from 'vuex-persistedstate'
+import createPersistedState from 'vuex-persistedstate'
 // import router from 'src/router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  // plugins: [
-  //   createPersistedState(),
-  // ],
+  plugins: [
+    createPersistedState(),
+  ],
   state: {
     currentMovieList: [],
     searchs: [],

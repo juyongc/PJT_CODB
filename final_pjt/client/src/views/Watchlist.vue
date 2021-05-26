@@ -14,6 +14,7 @@
 <script>
 import axios from 'axios'
 import WatchlistItem from '@/components/WatchlistItem.vue'
+
 export default {
   name: 'Watchlist',
   components: { 
@@ -42,15 +43,18 @@ export default {
       })
       .then((res) => {
         this.movieList = res.data
-        console.log(res.data)
+        // console.log(res.data)
       })
+    if (this.$store.state.isLogin) {
+      this.$store.dispatch('getReviews')
+    }
+    else {
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>
 
 <style>
-  .movieImg {
-    width: 50%;
-    height: auto;
-  }
+
 </style>
