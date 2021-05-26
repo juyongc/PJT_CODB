@@ -6,13 +6,14 @@
 
     <Modal 
       v-if="isModal" 
-      :movie="movie"
+      :movie="movieData"
       @close-modal="isModal = false"/>
   </div>
 </template>
 
 <script>
 import Modal from '@/components/Modal.vue'
+import axios from 'axios'
 export default {
   name: 'WatchlistItem',
   components: {
@@ -26,14 +27,10 @@ export default {
   data: function () {
     return {
       isModal: false,
+      movieData: [],
     }
   },
   methods: {
-    searchMovie: function () {
-      console.log(this.movie.title)
-      this.$store.dispatch('searchDetail', this.movie.movieid)
-      this.$router.push({ name: 'SearchMovieDetail', params: { title: this.movie.title }})
-    },
     showModal: function () {
       this.isModal = true
       this.$store.dispatch('getImages', this.movie.movieid)
@@ -41,7 +38,17 @@ export default {
     },
   },
   created() {
-    console.log(this.movie.movieid)
+    axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/movie/${this.movie.movieid}?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR`
+      })
+      .then(res => {
+        this.movieData = res.data
+        return this.movieData
+      })
+      .catch(err => (
+        console.log(err)
+      ))
   }
 }
 </script>
