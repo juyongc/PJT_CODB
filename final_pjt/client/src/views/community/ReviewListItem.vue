@@ -2,13 +2,17 @@
   <div>
     <h2>제목 : {{ review.title }}</h2>
     <h4 class="text-muted">영화 제목 : {{ review.movie_title }}</h4>
-    <h5 class="text-muted">작성자 : | 평가 점수 {{ review.rank }}</h5>
+    <h5 class="text-muted">작성자 {{ review.user }}: | 평가 점수 {{ review.rank }}</h5>
     <h5 class="text-muted">작성 시간 : {{ review.created_at }}</h5>
     <h5 class="text-muted">수정 시간 : {{ review.updated_at }}</h5>
     <p>{{ review.content }}</p>
-    <hr>
-    <button @click="updateReview(review)">수정</button>
-    <button @click="deleteReview(review)">삭제</button>
+    
+    <div v-show="review.isEqual">
+      <hr>
+      <button @click="updateReview(review)">수정</button>
+      <button @click="deleteReview(review)">삭제</button>
+    </div>
+    
     <hr>
     <button @click="backToList">돌아가기</button>
     <hr>
@@ -27,22 +31,26 @@
       </b-input-group>
     </div>
     <hr>
-    <ul v-for="comment in review.comments" :key="comment.id" :comment="comment">
-      <li>
-        <span>작성자 : {{ comment.user }} | </span>
-        <span class="text-muted">{{ comment.created_at }} | </span>
-        <button @click="deleteComment(comment)">삭제</button>
-        <p>내용 : {{ comment.content }}</p>
-      </li>
+    <ul>
+      <Comments v-for="comment in review.comments" :key="comment.id" :comment="comment" @deleteComment="getReviewagain"/>
     </ul>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Comments from '@/components/Comments.vue'
 
 export default {
   name: 'ReviewListItem',
+  props: {
+    pk: {
+      type: Number,
+    }
+  },
+  components: {
+    Comments,
+  },
   data: function () {
     return {
       newComment: null,
@@ -55,7 +63,10 @@ export default {
     deleteReview: function (review) {
       axios({
         method: 'delete',
-        url: `http://127.0.0.1:8000/community/review/${review.id}/`
+        url: `http://127.0.0.1:8000/community/review/${review.id}/`,
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        }
       })
       .then(res => {
         if (res.status === 204) {
@@ -77,31 +88,20 @@ export default {
     createComment: function () {
       const commentData = {
         content: this.newComment,
-        user: 1,
+        isEqual: true,
       }
       axios({
         method: 'post',
         url: `http://127.0.0.1:8000/community/review/${this.review.id}/comments/`,
-        data: commentData
+        data: commentData,
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        }
       })
       .then(res => {
         if (res.status === 201) {
           this.getReviewagain()
           this.newComment = ''
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
-    },
-    deleteComment: function (comment) {
-      axios({
-        method: 'delete',
-        url: `http://127.0.0.1:8000/community/comments/${comment.id}/`,
-      })
-      .then(res => {
-        if (res.status === 204) {
-          this.getReviewagain()
         }
       })
       .catch(err => {
@@ -114,6 +114,13 @@ export default {
       return this.$store.state.review
     }
   },
+  created: function () {
+    if (!this.$store.state.isLogin) {
+      this.$router.push({ name: 'Login' })
+    }
+    this.$store.dispatch('getReviewDetail', this.pk)
+    console.log(this.review)
+  }
 }
 </script>
 

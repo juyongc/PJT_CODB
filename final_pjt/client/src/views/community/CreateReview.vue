@@ -90,11 +90,15 @@ export default {
         movie_title: this.form.movieTitle,
         rank: this.form.value,
         content: this.form.text,
+        isEqual: true,
       }
       axios({
         method: 'post',
         url: 'http://127.0.0.1:8000/community/reviews/',
         data: reviewItem,
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        }
       })
       .then(res => {
         if (res.status === 201) {
@@ -121,6 +125,12 @@ export default {
     backToList: function () {
       this.$router.push({ name: "Reviews" })
     },
+  },
+  created: function () {
+    if (!this.$store.state.isLogin) {
+      console.log(this.$store.state.isLogin)
+      this.$router.push({ name: 'Login' })
+    }
   }
 }
 </script>

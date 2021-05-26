@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
 // import router from 'src/router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins: [
-    createPersistedState(),
-  ],
+  // plugins: [
+  //   createPersistedState(),
+  // ],
   state: {
     currentMovieList: [],
     searchs: [],
@@ -22,7 +22,9 @@ export default new Vuex.Store({
     page: 1,
     backdropsImg: [],
     reviews: [],
-    review: null,
+    review: '',
+    credits: [],
+    isLogin: false,
   },
   mutations: {
     SEARCH_MOVIE: function (state, movieList) {
@@ -50,13 +52,16 @@ export default new Vuex.Store({
       state.page += 1
       // console.log(state.page)
     },
-    UPDATE_CHOICE: function (state, movieId) {
-      if (!state.myChoice.includes(movieId)) {
-        state.myChoice.push(movieId)
+    SET_PAGE: function (state, page) {
+      state.page = page
+    },
+    UPDATE_CHOICE: function (state, movie) {
+      if (!state.myChoice.includes(movie)) {
+        state.myChoice.push(movie)
         // console.log(state.myChoice)
       }
       else {
-        const index = state.myChoice.indexOf(movieId)
+        const index = state.myChoice.indexOf(movie)
         state.myChoice.splice(index, 1)
         // console.log(state.myChoice)
       }
@@ -76,12 +81,21 @@ export default new Vuex.Store({
       }
       // console.log(state.backdropsImg)
     },
+    GET_CREDITS: function (state, credits) {
+      state.credits = credits
+    },
     GET_REVIEWS: function (state, reviews) {
       state.reviews = reviews
       // console.log(state.reviews)
     },
     GET_REVIEW_DETAIL: function (state, review) {
       state.review = review
+    },
+    ON_LOGOUT: function (state) {
+      state.isLogin = false
+    },
+    ON_LOGIN: function (state) {
+      state.isLogin = true
     }
   },
   actions: {
@@ -149,17 +163,17 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
-    updateChoice: function ({ commit }, movieId) {
-      commit('UPDATE_CHOICE', movieId)      
+    updateChoice: function ({ commit }, movie) {
+      commit('UPDATE_CHOICE', movie)      
     },
     makeRecommendation: function ({ commit }) {
       this.state.recommendList = []
       // console.log(this.state.myChoice)
-      for (let movieId of this.state.myChoice) {
+      for (let movie of this.state.myChoice) {
         // console.log(movieId)
         axios({
           method: 'get',
-          url: `https://api.themoviedb.org/3/movie/${movieId}/similar?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=1`
+          url: `https://api.themoviedb.org/3/movie/${movie.id}/similar?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&page=1`
         })
         .then(res => {
           // console.log(res.data.results)
@@ -184,22 +198,50 @@ export default new Vuex.Store({
         console.log(err)
       })
     },
+    getCredits: function ({ commit }, movieId) {
+      // this.state.credits = []
+      axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR`
+      })
+      .then(res => {
+        // console.log(res.data)
+        commit('GET_CREDITS', res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
     getReviews: function ({ commit }) {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/community/reviews/'
+        url: 'http://127.0.0.1:8000/community/reviews/',
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        }
       })
       .then(res => {
+        // console.log(res.data)
         commit('GET_REVIEWS', res.data)
+      })
+      .catch(err => {
+        console.log(err)
       })
     },
     getReviewDetail: function ({ commit }, reviewPk) {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/community/review/${reviewPk}`
+        url: `http://127.0.0.1:8000/community/review/${reviewPk}`,
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        }
       })
       .then(res => {
+        // console.log(res.data)
         commit('GET_REVIEW_DETAIL', res.data)
+      })
+      .catch(err => {
+        alert(err)
       })
     },
     // 진짜 모르겠다. 여기 질문한번 해야할듯

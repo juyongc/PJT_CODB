@@ -8,7 +8,7 @@
             <div class="col-md-2">
               <img class="card-img-left img-fluid" :src="movie_poster" alt="movie poster">
             </div>
-            <div class="col-md-10">
+            <div class="col-md-10 p-3">
               <h4 class="card-title">{{ movie.title }}</h4>
               <p class="text-muted">{{ movie.release_date }}</p>
               <p class="card-text">{{ movie.overview }}</p>
@@ -54,6 +54,7 @@ export default {
     showModal: function () {
       this.isModal = true
       this.$store.dispatch('getImages', this.movie.id)
+      this.$store.dispatch('getCredits', this.movie.id)
     },
   },
   computed: {

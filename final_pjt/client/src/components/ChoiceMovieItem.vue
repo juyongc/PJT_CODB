@@ -1,10 +1,10 @@
 <template>
-  <div class="col">
+  <div class="col-12 col-sm-6 col-md-3 col-lg-2">
     <div class="card">
-      <img class="card-img" :src="movie_poster" alt="movie poster">
+        <img class="card-img" :src="movie_poster" alt="movie poster">
       <div class="card-img-overlay">
-        <input type="checkbox"  @click="updateChoice" :id="movie.id" :value="movie.id" :checked="inMyList">
-        <!-- <label :for="movie.id">{{ movie.title }}</label> -->
+        <input type="checkbox" class="form-check-input" @click="updateChoice" :id="movie.id" :checked="inMyList">
+        <label class="form-check-label" :for="movie.id"></label>
       </div>
     </div>
   </div>
@@ -25,11 +25,11 @@ export default {
   },
   methods: {
     updateChoice: function () {
-      this.$store.dispatch('updateChoice', this.movie.id)
+      this.$store.dispatch('updateChoice', this.movie)
     }
   },
   created: function () {
-    if (this.$store.state.myChoice.includes(this.movie.id)) {
+    if (this.$store.state.myChoice.includes(this.movie)) {
       this.inMyList = true
     }
     else {

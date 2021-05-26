@@ -89,11 +89,15 @@ export default {
         movie_title: this.form.movieTitle,
         rank: this.form.value,
         content: this.form.text,
+        isEqual: true,
       }
       axios({
         method: 'put',
         url: `http://127.0.0.1:8000/community/review/${this.$route.params.pk}/`,
         data: reviewItem,
+        headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+        }
       })
       .then(res => {
         if (res.status === 200) {
@@ -125,14 +129,18 @@ export default {
     console.log(this.$route.params)
     axios({
       method: 'get',
-      url: `http://127.0.0.1:8000/community/review/${this.$route.params.pk}/`
+      url: `http://127.0.0.1:8000/community/review/${this.$route.params.pk}/`,
+      headers: {
+          Authorization: `JWT ${localStorage.getItem('jwt')}`
+      }
     })
     .then(res => {
-      console.log(res)
       this.form.title = res.data.title
       this.form.movieTitle = res.data.movie_title
       this.form.value = res.data.rank
       this.form.text = res.data.content
+      this.form.isEqual = res.data.isEqual
+      this.form.user = res.data.user
     })
     .catch(err => {
       console.log(err)
