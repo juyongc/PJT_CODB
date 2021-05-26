@@ -1,20 +1,21 @@
 <template>
-  <div class='position-absolute top-50 start-50 translate-middle border border-dark rounded' style="width: 500px">
-    <h2 class="text-center">LOGIN</h2>
-    <div class='mx-2 text-center'>
-      <input type="text" placeholder=" 아이디" v-model="credentials.username">
-      <!-- <label for="username">아이디: </label>
-      <input type="text" id="username"  v-model="credentials.username"> -->
+  <div class='loginBox bg-dark text-white position-absolute top-50 start-50 translate-middle border border-dark rounded'>
+    <h1 class="loginM">LOGIN</h1>
+    <div class="marginManual" >
+      <input class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="text" placeholder="아이디" v-model="credentials.username">
     </div>
-    <div class='text-center'>
-      <!-- <label for="password">패스워드: </label>
-      <input type="text" id="password"  v-model="credentials.password"> -->
-      <input type="text" placeholder=" 비밀번호"  v-model="credentials.password">
+    <div class="marginManual">
+      <input class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="password" placeholder="비밀번호"  v-model="credentials.password">
     </div>
-    <div class='d-grid gap-2 col-4 mx-auto text-center'>
-      <button class="btn btn-lg btn-primary" @click="login">로그인</button>
+    <div class='marginManual' style="margin-top: 40px">
+      <button class="loginBt btn btn-lg btn-danger" @click="login">로그인</button>
     </div>
-      <button class="mx-auto" @click="moveSignup">회원가입</button>
+    <div class='marginManual' style="margin-top: 20px" >
+    <div>
+    <label for="goSignup">회원이 아닌가요?</label>
+    <router-link id="goSignup" :to="{ name: 'Signup' }" class="nav-link d-inline fw-bold">지금 회원가입하세요!</router-link>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -55,5 +56,30 @@ export default {
 </script>
 
 <style>
-
+  .loginBox {
+    width: 500px;
+    height: 420px;
+  }
+  .loginBt {
+    width: 100%;
+    height: 60px;
+    /* margin-top: 10px;
+    margin-bottom: 10px; */
+  }
+  .loginM {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+  }
+  .marginManual {
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 1px;
+    /* margin-top: 40px;
+    margin-bottom: 40px; */
+  }
+  input::placeholder { 
+    color: rgba(255, 255, 255, 0.75);
+  }
 </style>

@@ -1,12 +1,13 @@
 <template>
   <div>
     <!-- <h4>*{{this.movieName.movieNm}}</h4>
-    <img :src="imgURL" alt=""> -->
+    <img :src="tmdbURL" alt=""> -->
     <b-carousel-slide>
       <template #img>
-        <img :src="imgURL">
+        <img :src="tmdbURL">
       </template>
     </b-carousel-slide>
+    <p>{{this.engtitle}}</p>
   </div>
 </template>
 
@@ -18,8 +19,10 @@ export default {
     return {
       moviePosters: [],
       moviePoster: [],
-      imgURL: '',
-
+      imgURL: null,
+      tmdbURL: null,
+      engtitle: null,
+      qvalue: null,
     }
   },
   props: {
@@ -34,7 +37,6 @@ export default {
       // client에서 해결방법은 proxy 서버를 구성하면 된다는데
       // 임시방편 느낌이 강함 - 내일 질문하기
       // console.log(this.movieName.movieNm)
-
       axios({
         method: 'POST',
         url: 'http://127.0.0.1:8000/movies/poster/',
@@ -44,11 +46,35 @@ export default {
         // console.log(response.data)
         this.moviePoster = response.data
         this.moviePosters.push(this.moviePoster[0])
-        this.imgURL = this.moviePoster[0]['image']
-        return this.imgURL
+        this.tmdbURL = 'https://www.themoviedb.org/t/p/original/' + this.moviePoster[0]['poster_path']
+        // this.imgURL = this.moviePoster[0]['image']
+        // this.engtitle = this.moviePoster[0]['subtitle']
+        // this.engtitle = this.engtitle.replace('<b>','')
+        // this.engtitle = this.engtitle.replace('</b>','')
+        // this.engtitle = this.engtitle.replace('&amp;','&')
+        // console.log(this.tmdbURL)
+        // this.qvalue = this.engtitle
+        return this.tmdbURL
       }).catch(error => {
         return console.log(error)
       })
+
+      // console.log(this.qvalue)
+      // const params = {
+      //   api_key: '7ecf0fa910e1bacb146ddf503cf3ec72',
+      //   query: this.engtitle,
+      // }
+      
+      // axios({
+      //   method: 'GET',
+      //   url: `https://api.themoviedb.org/3/search/movie?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&query=${this.qvalue}&include_adult=false`,
+        
+      // }).then(response => {
+      //   // console.log('sucess!',response)
+      //   console.log(response.data)
+      // }).catch(error => {
+      //   return console.log(error)
+      // })
 
       // const NAVER_KEY = process.env.VUE_APP_NAVER_API_KEY
       // const NAVER_PW = process.env.VUE_APP_NAVER_API_PW

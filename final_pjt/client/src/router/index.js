@@ -11,6 +11,7 @@ import CreateReview from '@/views/community/CreateReview.vue'
 import UpdateReview from '@/views/community/UpdateReview.vue'
 import Login from '@/views/Login.vue'
 import Signup from '@/views/Signup.vue'
+import Watchlist from '@/views/Watchlist.vue'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
     path: '/login/signup',
     name: 'Signup',
     component: Signup,
+  },
+  {
+    path: '/watchlist',
+    name: 'Watchlist',
+    component: Watchlist,
   }
 ]
 

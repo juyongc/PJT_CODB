@@ -13,10 +13,13 @@
       <div class="col-md-1">
         <router-link :to="{ name: 'Reviews' }" class="nav-link">Community</router-link>
       </div>
-      <div class="col-md-2" v-if="isLogin">
-        <router-link @click.native="logout" :to="#" class="nav-link">Logout</router-link>
+      <div class="col-md-1">
+        <router-link :to="{ name: 'Watchlist' }" class="nav-link">Watchlist</router-link>
       </div>
-      <div class="col-md-2" v-else>
+      <div class="col-md-1" v-if="isLogin">
+        <router-link @click.native="logout" :to="{ name: 'Home' }" class="nav-link">Logout</router-link>
+      </div>
+      <div class="col-md-1" v-else>
         <router-link :to="{ name: 'Login' }" class="nav-link">Login</router-link>
       </div>
     </nav>

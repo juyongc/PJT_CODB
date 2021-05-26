@@ -82,7 +82,7 @@ export default new Vuex.Store({
     },
     GET_REVIEW_DETAIL: function (state, review) {
       state.review = review
-    },
+    }
   },
   actions: {
     searchMovie: function ({ commit }, inputText) {
