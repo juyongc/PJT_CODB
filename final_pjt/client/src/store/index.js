@@ -135,7 +135,7 @@ export default new Vuex.Store({
       })
       .then(res => {
         commit('SEARCHING_MOVIE', res.data.results)
-        // console.log(res.data.results)
+        console.log(res)
       })
       .catch(err => {
         console.log(err)

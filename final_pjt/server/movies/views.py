@@ -1,14 +1,14 @@
-from .models import Poster, Movie
-from .serializers import PosterSerializer
+from .models import Poster, Recommend
+from .serializers import PosterSerializer, RecommendSerializer
 import json, html
 import requests
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-# from rest_framework.decorators import authentication_classes, permission_classes
-# from rest_framework.permissions import IsAuthenticated
-# from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.decorators import authentication_classes, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 
 @api_view(['POST','GET'])
@@ -61,3 +61,36 @@ def poster(request):
         posters = Poster.objects.all()
         serializer = PosterSerializer(posters, many=True)
         return Response(serializer.data)
+
+# Recommend 기능 추가
+@api_view(['POST', 'GET'])
+@authentication_classes([JSONWebTokenAuthentication])
+@permission_classes([IsAuthenticated])
+def add_recommend(request):
+    if request.method == 'POST':
+        serializer = RecommendSerializer(data=request.data)
+        print(request.data)
+        if serializer.is_valid(raise_exception=True):
+            if request.user.recommend_set.filter(title=request.data['title']).exists():
+                request.user.recommend_set.filter(title=request.data['title']).delete()
+                return Response(False,status=200)
+            else:
+                serializer.save(user=request.user)
+                return Response(True, status=201)
+
+    # elif request.method == 'GET':
+    #     serializer = RecommendSerializer(request.user.recommend_set, many=True)
+    #     return Response(serializer.data)
+
+
+# @api_view(['POST'])
+# @authentication_classes([JSONWebTokenAuthentication])
+# @permission_classes([IsAuthenticated])
+# def check_recommend(request):
+#     if request.method == 'POST':
+#         serializer = RecommendSerializer(data=request.data)
+#         if serializer.is_valid(raise_exception=True):
+#             if request.user.like_movie_set.filter(title=request.data['title']).exists():
+#                 return Response(True,status=200)
+#             else:
+#                 return Response(False, status=201)

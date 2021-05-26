@@ -102,7 +102,7 @@ export default {
     }
   },
   created() {
-    console.log(this.movie)
+    // console.log(this.movie)
     axios({
         method: 'post',
         url: 'http://127.0.0.1:8000/accounts/check/',
