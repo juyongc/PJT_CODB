@@ -88,6 +88,9 @@ export default {
       return config
     },
     CallWatchlist: function () {
+      if (!this.$store.state.isLogin) {
+        this.$router.push({ name: 'Login' })
+      }
       axios({
         method: 'post',
         url: 'http://127.0.0.1:8000/accounts/',
@@ -122,7 +125,7 @@ export default {
         this.like = res.data
       })
       .catch(err => {
-        alert(err)
+        console.log(err)
       })
   },
   computed: {

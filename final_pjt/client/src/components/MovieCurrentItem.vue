@@ -1,33 +1,25 @@
 <template>
-  <div class="card">
+  <!-- <div v-if="tmdbURL" class="card">
     <img :src="tmdbURL" alt="">
     <div class="card-body">
       <h5 class="card-title">{{ movieName.movieNm }}</h5>
       <p class="card-text">-</p>
     </div>
-  </div>
-
-  <!-- <div>
-    <div class="carousel-item active">
-      <img :src="tmdbURL" class="d-block w-10" alt="">
-    </div>
-    
-    <b-carousel-slide>
-
-      <template #img>
-        <img :src="tmdbURL">
-      </template>
-
-    </b-carousel-slide>
-    <p>{{this.engtitle}}</p>
   </div> -->
+  <slide>
+    <img :src="tmdbURL" alt="" height="480" width="auto">
 
+  </slide>  
 </template>
 
 <script>
 import axios from 'axios'
+
+
 export default {
   name: 'MovieCurrentItem',
+  compnents: {
+  },
   data: function () {
     return {
       moviePosters: [],
@@ -54,8 +46,10 @@ export default {
         this.moviePoster = response.data
         // console.log(this.moviePoster)
         this.moviePosters.push(this.moviePoster[0])
-        this.tmdbURL = 'https://www.themoviedb.org/t/p/original/' + this.moviePoster[0]['poster_path']
-        return this.tmdbURL
+        if (this.moviePosters[0]) {
+          this.tmdbURL = 'https://www.themoviedb.org/t/p/original/' + this.moviePoster[0]['poster_path']
+          return this.tmdbURL
+        }
       })
       .catch(error => {
         return console.log(error)
@@ -65,9 +59,5 @@ export default {
 </script>
 
 <style>
-/* .carousel-item img {
-  width: 10vh !important ;
-  height: 10vh !important;
-} */
 
 </style>
