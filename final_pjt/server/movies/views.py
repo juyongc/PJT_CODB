@@ -29,32 +29,40 @@ def poster(request):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             # 네이버 API 사용 => 영어 타이틀 추출
-            params = {
-                'query': serializer.data["poster_title"],
-            }
-            result = requests.get(NAVER_URL,params=params,headers=headers)
-            json_data = result.json()
-            get_poster = json_data['items']
-            engtitle = json_data['items'][0]['subtitle']
-            engtitle = html.unescape(engtitle)
-            engtitle = engtitle.replace('<b>', '')
-            engtitle = engtitle.replace('</b>', '')
-            # engtitle = engtitle.replace('&amp;','&')
-            # print(engtitle)
-            # print(result.status_code)
+            # params = {
+            #     'query': serializer.data["poster_title"],
+            # }
+            # result = requests.get(NAVER_URL,params=params,headers=headers)
+            # json_data = result.json()
+            # get_poster = json_data['items']
+            # engtitle = json_data['items'][0]['subtitle']
+            # engtitle = html.unescape(engtitle)
+            # engtitle = engtitle.replace('<b>', '')
+            # engtitle = engtitle.replace('</b>', '')
+
+
+            # # TMDB API 사용 => 데이터 추출
+            # tmdb_params = {
+            #     'api_key': '7ecf0fa910e1bacb146ddf503cf3ec72',
+            #     'language': 'ko-KR',
+            #     'query': engtitle,
+            # }
+            # tmdb_data = requests.get(TMDB_URL,tmdb_params)
+            # json_tmdb = tmdb_data.json()
+            # movie_tmdb = json_tmdb['results']
+            # return Response(movie_tmdb,status=200)
 
             # TMDB API 사용 => 데이터 추출
             tmdb_params = {
                 'api_key': '7ecf0fa910e1bacb146ddf503cf3ec72',
                 'language': 'ko-KR',
-                'query': engtitle,
+                'query': serializer.data["poster_title"],
             }
             tmdb_data = requests.get(TMDB_URL,tmdb_params)
             json_tmdb = tmdb_data.json()
             movie_tmdb = json_tmdb['results']
             return Response(movie_tmdb,status=200)
-            # return Response((get_poster,movie_tmdb),status=200)
-            # return Response(get_poster,status=200)
+
     elif request.method == 'GET':
         print(json.dumps(secret_key))
         print(naver_key, naver_pw)

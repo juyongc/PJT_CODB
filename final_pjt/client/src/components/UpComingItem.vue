@@ -1,7 +1,7 @@
 <template>
   <div class="col-6 col-md-3 col-lg-2">
     <div class="card h-100">
-      <img v-b-modal="movie.title" @click="showModal" :src="movie_poster" alt="" class="card-img img-fluid">
+      <img v-b-modal="movie.title" @click="showModal" :src="movie_poster" alt="" class="movieImg">
       <Modal 
         v-if="isModal && this.$store.state.credits" 
         :movie="movie"
@@ -50,7 +50,11 @@ export default {
 </script>
 
 <style>
-img {
+/* img {
   max-height: 100% !important;
-}
+} */
+/* .movieImg {
+  max-height: 100% !important;
+  height: 100%;
+} */
 </style>

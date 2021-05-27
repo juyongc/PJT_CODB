@@ -32,6 +32,7 @@ def signup(request):
 def add_movie(request):
     if request.method == 'POST':
         serializer = LikeSeriallizer(data=request.data)
+        # print(request.data)
         if serializer.is_valid(raise_exception=True):
             if request.user.like_movie_set.filter(title=request.data['title']).exists():
                 request.user.like_movie_set.filter(title=request.data['title']).delete()
