@@ -24,7 +24,7 @@ class ReviewListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ('pk', 'title', 'movie_title', 'comment_count', 'created_at', 'user', 'username')
+        fields = ('pk', 'title', 'movie_title', 'comment_count', 'created_at', 'user', 'username', 'rank')
 
     def get_username(self, obj):
         return obj.user.username

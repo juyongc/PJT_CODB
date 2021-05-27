@@ -41,12 +41,13 @@
         <br>
         <p>{{ movie.overview }}</p>
 
-        <span class="fw-bold">Director: </span>
+        <span class="fw-bold text-warning">Director: </span>
         <div class="d-inline" v-for="crew in this.$store.state.credits.crew" :key="crew.credit_id">
+
           <span v-if="crew.department === 'Directing'">{{ crew.name }} | </span>
         </div>
         <br>
-        <span class="fw-bold">Stars: </span>
+        <span class="fw-bold text-warning">Stars: </span>
         <div class="d-inline" v-for="cast in this.$store.state.credits.cast" :key="cast.credit_id">
           <span v-if="cast.popularity > 5">{{ cast.name }} |  </span>
         </div>
