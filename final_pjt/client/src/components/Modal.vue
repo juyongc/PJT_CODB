@@ -1,10 +1,13 @@
 <template>
 <div>
-  <b-modal :id="movie.title" size="lg" hide-header-close @ok="goReviews">
+  <b-modal :id="movie.title" size="lg" hide-header-close @ok="goReviews"
+    header-bg-variant="dark"
+    body-bg-variant="secondary"
+    footer-bg-variant="secondary">
     <template #modal-header>
       <div>
-        <h3>{{ movie.title }}</h3>
-        <h5>{{ movie.original_title }}</h5>
+        <h3 class="text-light fw-bold">{{ movie.title }}</h3>
+        <h5 class="text-light fw-light">{{ movie.original_title }}</h5>
       </div>
       <button class="btn">
         <p @click="CallWatchlist" v-if="like" style="color: #dc3545;" class="align-text-top">
@@ -36,16 +39,16 @@
         </div>
       </template>
       <div v-if="this.$store.state.credits">
-        <p>{{ movie.overview }}</p>
+        <p class="text-light">{{ movie.overview }}</p>
 
-        <span class="fw-bold">Director: </span>
+        <span class="fw-bold text-warning">Director: </span>
         <div class="d-inline" v-for="crew in this.$store.state.credits.crew" :key="crew.credit_id">
-          <span v-if="crew.department === 'Directing'">{{ crew.name }}, </span>
+          <span class="text-light" v-if="crew.department === 'Directing'">{{ crew.name }}, </span>
         </div>
         <br>
-        <span class="fw-bold">Stars: </span>
+        <span class="fw-bold text-warning">Stars: </span>
         <div class="d-inline" v-for="cast in this.$store.state.credits.cast" :key="cast.credit_id">
-          <span v-if="cast.popularity > 5">{{ cast.name }}, </span>
+          <span class="text-light" v-if="cast.popularity > 5">{{ cast.name }}, </span>
         </div>
       </div>
 

@@ -1,39 +1,59 @@
 <template>
-  <div>
-    <h2>제목 : {{ review.title }}</h2>
-    <h4 class="text-muted">영화 제목 : {{ review.movie_title }}</h4>
-    <h5 class="text-muted">작성자 {{ review.username }}: | 평가 점수 {{ review.rank }}</h5>
-    <h5 class="text-muted">작성 시간 : {{ ago(review.created_at) }}</h5>
-    <h5 class="text-muted">수정 시간 : {{ ago(review.updated_at) }}</h5>
-    <p>{{ review.content }}</p>
-    
-    <div v-show="review.isEqual">
-      <hr>
-      <button @click="updateReview(review)">수정</button>
-      <button @click="deleteReview(review)">삭제</button>
+  <div id="ReviewListItem">
+    <div class="d-flex justify-content-between">
+      <h2 class="d-inline text-warning fw-bold">User Review</h2>
+      <button class="btn btn-secondary mt-2 d-inline" @click="backToList">Back to List</button>
     </div>
-    
-    <hr>
-    <button @click="backToList">돌아가기</button>
-    <hr>
-    <div>
-      <b-input-group>
-        <label for="comment-input">댓글</label>
-        <b-form-input 
-          id="comment-input" 
-          type="text" 
-          required 
-          placeholder="Enter Comment" 
-          v-model="newComment"
-          @keyup.enter="createComment">
-        </b-form-input>
-        <b-button @click="createComment">입력</b-button>
-      </b-input-group>
+    <hr class="text-warning">
+
+    <div class="card text-light bg-dark">
+      <div class="card-header">
+        <div class="d-flex justify-content-between">
+          <div class="title-group ps-2 pt-2">
+            <h2 class="d-inline ">{{ review.title }}</h2>
+            <span class="fs-3 text-warning ms-3">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </span>
+            <span class="ms-2">{{ review.rank }}</span>
+          </div>
+          <small class="d-line my-auto pe-2">{{ review.username }} / {{ ago(review.created_at) }}</small>
+          
+        </div>
+        <div class="sub-group d-flex justify-content-between">
+          <i class="text-muted d-block ps-2">{{ review.movie_title }}</i>
+          <div v-show="review.isEqual" class="button-group pe-2">
+            <button class="btn btn-secondary" @click="updateReview(review)">Edit</button>
+            <button class="btn btn-secondary ms-2" @click="deleteReview(review)">Delete</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="card-text p-2">{{ review.content }}</p>
+        
+      </div>
+      <div class="card-footer text-muted">
+        <!-- <label for="comment-input" class="p-2 mb-2">Comment</label> -->
+        <b-form-group class="px-2 py-3">
+          <b-input-group>
+            <b-form-input
+              id="comment-input"
+              type="text"
+              required 
+              placeholder="Enter Comment"
+              v-model="newComment"
+              @keyup.enter="createComment">
+            </b-form-input>
+            <b-button @click="createComment">입력</b-button>
+          </b-input-group>
+        </b-form-group>
+        <ul class="list-group list-group-flush">
+          <Comments v-for="comment in review.comments" :key="comment.id" :comment="comment" @deleteComment="getReviewagain"/>
+        </ul>
+      </div>
     </div>
-    <hr>
-    <ul>
-      <Comments v-for="comment in review.comments" :key="comment.id" :comment="comment" @deleteComment="getReviewagain"/>
-    </ul>
+
   </div>
 </template>
 
@@ -146,5 +166,10 @@ export default {
 </script>
 
 <style>
-
+#ReviewListItem{
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  padding-top: 5vh !important;
+  padding-bottom: 5vh !important;
+}
 </style>

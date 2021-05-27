@@ -44,7 +44,6 @@ export default {
       })
       .then((res) => {
         this.movieList = res.data
-        console.log(res.data)
       })
     if (this.$store.state.isLogin) {
       this.$store.dispatch('getReviews')

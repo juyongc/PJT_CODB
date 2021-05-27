@@ -1,9 +1,15 @@
 <template>
-  <li>
-    <span>작성자 : {{ thisComment.username }} | </span>
-    <span class="text-muted">{{ ago(thisComment.created_at) }} | </span>
-    <button v-if="thisComment.isEqual" @click="deleteComment(thisComment)">삭제</button>
-    <p>내용 : {{ thisComment.content }}</p>
+  <li class="list-group-item">
+    <div class="d-flex justify-content-between">
+      <span class="text-light p-2">{{ thisComment.content }}</span>
+
+      <div class="p-2">
+        <small class="text-light">{{ thisComment.username }} / {{ ago(thisComment.created_at) }}</small>
+        <button 
+          v-if="thisComment.isEqual" @click="deleteComment(thisComment)"
+          type="button" class="btn-close btn-close-white ms-3" aria-label="Close"></button>
+      </div>
+    </div>
   </li>
 </template>
 
@@ -80,6 +86,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.list-group-item {
+  background-color: #212529 !important;
+}
 </style>

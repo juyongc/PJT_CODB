@@ -1,6 +1,6 @@
 <template>
   <div id="MovieCurrent">
-    <h2 class="mb-4 fw-bold">
+    <h2 class="mb-4 fw-bold text-warning">
       Boxoffice Today
       <!-- <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chevron-right" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
@@ -12,37 +12,36 @@
     </h2>
       <div class="row">
         <div class="col-md-9">
-
-           
-          <!-- <template>
-            <div class="card-group"> -->
-
-            <carousel
-              :perPage="2"
-              :autoplay="true"
-            >
+          <carousel
+            :perPage="2"
+            :autoplay="true"
+            :loop="true"
+          >
             <slide v-for="movie in tmdbCurrent" :key="movie.id">
               <img :src="'https://www.themoviedb.org/t/p/original/' + movie.poster_path" alt="" height="480" width="auto">
-              <!-- <span>{{ movie.title }}</span> -->
             </slide>
-              <!-- <MovieCurrentItem 
-                v-for="movieName in currentList" 
-                :key="movieName.rnum"
-                :movieName="movieName"
-              /> -->
-            </carousel>
-            <!-- </div>
-          </template> -->
-
+          </carousel>
         </div>
+
         <div class="col-md-3">
-          <h4 class="text-center">순위</h4>
-          <ul class="list-group" 
-            v-for="(movieName, idx) in currentList" 
-            :key="movieName.rnum"
-            :movieName="movieName">
-            <li class="list-group-item"><b>{{ idx+1 }}위</b> {{ movieName.movieNm }}</li>
-          </ul>
+          <h5 class="text-warning fw-bold mb-4">Top Boxoffice</h5>
+            <div class="list-group list-group-flush" >
+              <button class="list-group-item border-warning" 
+                v-for="(movie, idx) in tmdbCurrent" 
+                :key="movie.id" 
+                :movie="movie"
+                v-b-modal="movie.title"
+                @click="showModal(movie)">
+              <Modal 
+                :movie="movie"
+                @close-modal="isModal = false"
+              />
+              <div class="text-start">
+                <b class="text-light pe-3">{{ idx+1 }}위</b> 
+                <span class="fw-light text-light">{{ movie.title }}</span>
+              </div>
+              </button>
+            </div>
         </div>
       </div>
       
@@ -52,13 +51,12 @@
 
 <script>
 import axios from 'axios'
-// import MovieCurrentItem from '@/components/MovieCurrentItem.vue'
-// import VueCarousel from '@chenfengyuan/vue-carousel.vue'
+import Modal from '@/components/Modal.vue'
 
 export default {
   name: 'MovieCurrent',
   components: {
-    // MovieCurrentItem,
+    Modal
   },
   data: function () {
     return {
@@ -67,80 +65,58 @@ export default {
       today: this.$moment().format('YYYYMMDD'),
       yesterday: this.$moment(this.today).subtract(1, 'days').format('YYYYMMDD'),
 
-      
+      isModal: false,      
     }
   },
   methods: {
-    
+    showModal: function (movie) {
+      this.isModal = true
+      this.$store.dispatch('getImages', movie.id)
+      this.$store.dispatch('getCredits', movie.id)
+    },
   },
   created() { 
-      // const KOFIC_KEY = process.env.VUE_APP_KOFIC_API_KEY
-      const KOFIC_URL = 'http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
-      const params = {
-        key: '04455cff29ada04fa486cc61ac4f0e9d',
-        targetDt: this.yesterday,
-      }
-      axios({
-        url: KOFIC_URL,
-        method: 'GET',
-        params,
-      })
-      .then(response => {
-        this.currentList = response.data.boxOfficeResult.dailyBoxOfficeList
-        for (let movie of this.currentList) {
-          axios({
-          method: 'get',
-          url: `https://api.themoviedb.org/3/search/movie?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&query=${movie.movieNm}&include_adult=false`,
-          })
-          .then(res => {
-            if (res.data.results.length > 1 && res.data.results) {
-              const sortReviews = res.data.results.slice(0).sort(function (a, b) {
-                return b.release_date - a.release_date
-              })
-              this.tmdbCurrent = this.tmdbCurrent.concat(sortReviews[0])
-            }
-            else {
-              this.tmdbCurrent = this.tmdbCurrent.concat(res.data.results)
-            }
-          })
-          .catch(err => {
-              console.log(err)
+    const KOFIC_URL = 'http://kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json'
+    const params = {
+      key: '04455cff29ada04fa486cc61ac4f0e9d',
+      targetDt: this.yesterday,
+    }
+    axios({
+      url: KOFIC_URL,
+      method: 'GET',
+      params,
+    })
+    .then(response => {
+      this.currentList = response.data.boxOfficeResult.dailyBoxOfficeList
+      for (let movie of this.currentList) {
+        axios({
+        method: 'get',
+        url: `https://api.themoviedb.org/3/search/movie?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&query=${movie.movieNm}&include_adult=false`,
+        })
+        .then(res => {
+          if (res.data.results.length > 1 && res.data.results) {
+            const sortReviews = res.data.results.slice(0).sort(function (a, b) {
+              return b.release_date - a.release_date
             })
+            this.tmdbCurrent = this.tmdbCurrent.concat(sortReviews[0])
           }
-      })
-      .catch(error => {
-        return console.log(error)
-      })
-
-      // var xhr = new XMLHttpRequest(); 
-      // var url = 'http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&nation=대한민국'); 
-      // /*URL*/ 
-      // var queryParams = '?' + encodeURIComponent('ServiceKey=서비스키'); 
-      // /*Service Key*/ 
-      // queryParams += '&' + encodeURIComponent('val001') + '=' + encodeURIComponent('2018')); 
-      // /*상영년도*/ 
-      // queryParams += '&' + encodeURIComponent('val002') + '=' + encodeURIComponent('01')); 
-      // /*상영월*/
-      // xhr.open('GET', url + queryParams); 
-      // xhr.onreadystatechange = function () { 
-      //   if (this.readyState == 4) { 
-      //     alert('Status: '+this.status+'Headers: '+JSON.stringify(this.getAllResponseHeaders())+'Body: '+this.responseText);
-      //     } 
-      //   }; 
-      //   xhr.send('');
-
-
-
-        // this.furl = `${KOFIC_URL}?key=${params.key}&targetDt=${params.targetDt}`
-        // console.log(this.furl)
-        // return this.furl
-
+          else {
+            this.tmdbCurrent = this.tmdbCurrent.concat(res.data.results)
+          }
+        })
+        .catch(err => {
+            console.log(err)
+          })
+        }
+    })
+    .catch(error => {
+      return console.log(error)
+    })
   }
-
 }
 </script>
 
-<style>
+<style scoped>
 .card-group {
   border-color: black;
   border-style: double;
@@ -153,11 +129,18 @@ export default {
 }
 .VueCarousel-slide {
   position: relative;
-  background: #42b983;
+  background: none;
   color: #fff;
   font-family: Arial;
   font-size: 24px;
   text-align: center;
   min-height: 100px;
 }
+.list-group-item {
+  background-color: black;
+}
+img {
+  border-radius: 3%;
+}
+
 </style>
