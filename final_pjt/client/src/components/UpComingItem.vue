@@ -49,6 +49,7 @@ export default {
 }
 </script>
 
+
 <style scoped>
 img {
   height: 100% !important;
