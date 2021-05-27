@@ -13,42 +13,27 @@
       <div class="row">
         <div class="col-md-9">
 
-          <template>
-            <div class="card-group">
-              <!-- <b-carousel
-                id="carousel-1"
-                :interval="2000"
-                fade
-                controls
-                img-width=1024
-                img-height=480
-              > -->
-                <MovieCurrentItem
-                  v-for="movieName in currentList" 
-                  :key="movieName.rnum"
-                  :movieName="movieName"
-                />
-              <!-- </b-carousel> -->
+           
+          <!-- <template>
+            <div class="card-group"> -->
 
-              <!-- <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                  <MovieCurrentItem
-                    v-for="movieName in currentList" 
-                    :key="movieName.rnum"
-                    :movieName="movieName"
-                  />
-                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                  </button>
-                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                  </button>
-                </div>
-              </div> -->
-            </div>
-          </template>
+            <carousel
+              :perPage="2"
+              :autoplay="true"
+            >
+            <slide v-for="movie in tmdbCurrent" :key="movie.id">
+              <img :src="'https://www.themoviedb.org/t/p/original/' + movie.poster_path" alt="" height="480" width="auto">
+              <!-- <span>{{ movie.title }}</span> -->
+            </slide>
+              <!-- <MovieCurrentItem 
+                v-for="movieName in currentList" 
+                :key="movieName.rnum"
+                :movieName="movieName"
+              /> -->
+            </carousel>
+            <!-- </div>
+          </template> -->
+
         </div>
         <div class="col-md-3">
           <h4 class="text-center">순위</h4>
@@ -56,7 +41,7 @@
             v-for="(movieName, idx) in currentList" 
             :key="movieName.rnum"
             :movieName="movieName">
-            <li class="list-group-item">{{ idx+1 }}위 {{ movieName.movieNm }}</li>
+            <li class="list-group-item"><b>{{ idx+1 }}위</b> {{ movieName.movieNm }}</li>
           </ul>
         </div>
       </div>
@@ -67,18 +52,26 @@
 
 <script>
 import axios from 'axios'
-import MovieCurrentItem from '@/components/MovieCurrentItem.vue'
+// import MovieCurrentItem from '@/components/MovieCurrentItem.vue'
+// import VueCarousel from '@chenfengyuan/vue-carousel.vue'
+
 export default {
   name: 'MovieCurrent',
   components: {
-    MovieCurrentItem,
+    // MovieCurrentItem,
   },
   data: function () {
     return {
       currentList: [],
+      tmdbCurrent: [],
       today: this.$moment().format('YYYYMMDD'),
       yesterday: this.$moment(this.today).subtract(1, 'days').format('YYYYMMDD'),
+
+      
     }
+  },
+  methods: {
+    
   },
   created() { 
       // const KOFIC_KEY = process.env.VUE_APP_KOFIC_API_KEY
@@ -91,10 +84,31 @@ export default {
         url: KOFIC_URL,
         method: 'GET',
         params,
-      }).then(response => {
+      })
+      .then(response => {
         this.currentList = response.data.boxOfficeResult.dailyBoxOfficeList
-        // console.log(this.currentList)
-      }).catch(error => {
+        for (let movie of this.currentList) {
+          axios({
+          method: 'get',
+          url: `https://api.themoviedb.org/3/search/movie?api_key=7ecf0fa910e1bacb146ddf503cf3ec72&language=ko-KR&query=${movie.movieNm}&include_adult=false`,
+          })
+          .then(res => {
+            if (res.data.results.length > 1 && res.data.results) {
+              const sortReviews = res.data.results.slice(0).sort(function (a, b) {
+                return b.release_date - a.release_date
+              })
+              this.tmdbCurrent = this.tmdbCurrent.concat(sortReviews[0])
+            }
+            else {
+              this.tmdbCurrent = this.tmdbCurrent.concat(res.data.results)
+            }
+          })
+          .catch(err => {
+              console.log(err)
+            })
+          }
+      })
+      .catch(error => {
         return console.log(error)
       })
 
@@ -130,5 +144,20 @@ export default {
 .card-group {
   border-color: black;
   border-style: double;
+}
+.label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.VueCarousel-slide {
+  position: relative;
+  background: #42b983;
+  color: #fff;
+  font-family: Arial;
+  font-size: 24px;
+  text-align: center;
+  min-height: 100px;
 }
 </style>

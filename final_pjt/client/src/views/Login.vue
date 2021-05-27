@@ -5,7 +5,7 @@
       <input class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="text" placeholder="아이디" v-model="credentials.username">
     </div>
     <div class="marginManual">
-      <input class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="password" placeholder="비밀번호"  v-model="credentials.password">
+      <input @keyup.enter="login" class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="password" placeholder="비밀번호"  v-model="credentials.password">
     </div>
     <div class='marginManual' style="margin-top: 40px">
       <button class="loginBt btn btn-lg btn-danger" @click="login">로그인</button>
@@ -48,8 +48,8 @@ export default {
         this.$emit('login')
         this.$router.push({ name: 'Home' })
       })
-      .catch(error => {
-        console.log(error)
+      .catch(() => {
+        alert('아이디 및 비밀번호가 올바르지 않습니다.')
       })
     }
   }
