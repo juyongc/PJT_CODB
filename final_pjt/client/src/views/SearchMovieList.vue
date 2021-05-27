@@ -1,6 +1,6 @@
 <template>
   <div id="SerchMovie">
-    <h2 class="mb-4">Search Results</h2>
+    <h2 class="mb-4 text-warning fw-bold">Search Results</h2>
 
     <div class="container-fluid">
       <SearchMovieListItem
