@@ -2,7 +2,7 @@
   <div id="ReviewListItem">
     <div class="d-flex justify-content-between">
       <h2 class="d-inline text-warning fw-bold">User Review</h2>
-      <button class="btn btn-secondary mt-2 d-inline" @click="backToList">Back to List</button>
+      <button class="btn btn-secondary mt-2 d-inline mybtn" @click="backToList">Back to List</button>
     </div>
     <hr style="color: rgb(255,193,7); border: 2px solid rgb(255,169,0); opacity: 1">
 
@@ -24,7 +24,7 @@
         <div class="sub-group d-flex justify-content-between">
           <i class="text-muted d-block ps-2">{{ review.movie_title }}</i>
           <div v-show="review.isEqual" class="button-group pe-2">
-            <button class="btn btn-secondary" @click="updateReview(review)">Edit</button>
+            <button class="btn btn-success" @click="updateReview(review)">Edit</button>
             <button class="btn btn-secondary ms-2" @click="deleteReview(review)">Delete</button>
           </div>
         </div>
@@ -171,5 +171,10 @@ export default {
   padding-right: 10vw !important;
   padding-top: 5vh !important;
   padding-bottom: 5vh !important;
+}
+.mybtn {
+  margin-right: .5rem !important;
+  background-color: rgb(50, 50, 50);
+  border-color: rgb(50, 50, 50);
 }
 </style>

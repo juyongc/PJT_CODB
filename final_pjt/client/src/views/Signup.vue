@@ -1,4 +1,5 @@
 <template>
+  <div class="flex-container">
   <div class='bg-dark text-white signupBox position-absolute top-50 start-50 translate-middle border border-dark rounded'>
     <h1 class="signupM" style="margin-top:50px">SIGNUP</h1>
     <div class="marginX" >
@@ -8,28 +9,13 @@
       <input class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="password" placeholder="비밀번호"  v-model="credentials.password">
     </div>
     <div class="marginX">
-      <input class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="password" placeholder="비밀번호 확인" v-model="credentials.passwordConfirmation">
+      <input @keyup.enter="signup(credentials)" class="loginBt p-3 bg-secondary text-white rounded border border-dark border-1" type="password" placeholder="비밀번호 확인" v-model="credentials.passwordConfirmation">
     </div >
     <div class='marginX' style="margin-top: 30px">
       <button class="loginBt btn btn-lg btn-danger" @click="signup(credentials)">확인</button>
     </div>
   </div>
-  <!-- <div>
-    <h2>Signup</h2>
-    <div>
-      <label for="username">아이디: </label>
-      <input type="text" id="username" v-model="credentials.username">
-    </div>
-    <div>
-      <label for="password">패스워드: </label>
-      <input type="password" id="password" v-model="credentials.password">
-    </div>
-    <div>
-      <label for="passwordConfirmation">패스워드 확인: </label>
-      <input type="password" id="passwordConfirmation" v-model="credentials.passwordConfirmation">
-    </div>
-    <button @click="signup(credentials)">확인</button>
-  </div> -->
+  </div>
 </template>
 
 <script>
@@ -90,5 +76,19 @@ export default {
   }
   input::placeholder { 
     color: rgba(255, 255, 255, 0.75);
+  }
+
+  .flex-container{
+  width: 100%;
+  height: 80vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   }
 </style>
