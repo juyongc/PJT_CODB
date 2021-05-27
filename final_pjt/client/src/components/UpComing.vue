@@ -84,7 +84,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .carousel {
   height: 250px;
   width: 80%;

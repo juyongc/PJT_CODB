@@ -1,6 +1,6 @@
 <template>
   <div id="Recommendation">
-    <h2 class="mb-4">Featured Movie</h2>
+    <h2 class="mb-4 text-warning fw-bold">Featured Movie</h2>
     <div v-if="movies.length > 0">
       <div class="d-grid gap-2 d-md-block">
         <button @click="reload" type="button" class="btn btn-secondary">Other Featured Movies</button>
@@ -86,6 +86,8 @@ export default {
 }
 button {
   margin-right: .5rem !important;
+  background-color: rgb(50, 50, 50);
+  border-color: rgb(50, 50, 50);
 }
 </style>
 

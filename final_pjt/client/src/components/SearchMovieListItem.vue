@@ -2,16 +2,18 @@
 <div>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-12 mt-3">
-        <div class="card" v-b-modal="movie.title" @click="showModal">
+      <div class="col-10 mt-3">
+        <div class="card" v-b-modal="movie.title" @click="showModal" style="background-color:rgb(35, 30, 30); border:1px solid rgb(35, 30, 30)">
           <div class="row g-0">
             <div class="col-md-2">
-              <img class="card-img-left img-fluid" :src="movie_poster" alt="movie poster">
+              <img class="card-img-left" :src="movie_poster" alt="movie poster">
             </div>
-            <div class="col-md-10 p-3">
-              <h4 class="card-title">{{ movie.title }}</h4>
-              <p class="text-muted">{{ movie.release_date }}</p>
-              <p class="card-text">{{ movie.overview }}</p>
+            <div class="col-md-10">
+              <div class="px-3 py-5">
+                <h4 class="card-title fw-bold">{{ movie.title }}</h4>
+                <p>{{ movie.release_date }}</p>
+                <p class="card-text ">{{ movie.overview }}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -62,7 +64,12 @@ export default {
 <style>
 .card-img-left {
   width: 100%;
-  height: 15vw;
-  object-fit: contain;
+  max-height: 100% !important;
+  height: 100%;
+  /* object-fit: contain; */
 }
+
+/* .searchImg {
+  height: 100% !important;
+} */
 </style>

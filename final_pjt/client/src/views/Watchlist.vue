@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <h1 class="mx-3 my-4">내 영화목록</h1>
-    <hr class="mx-3 my-4">
+  <div id="Mymovie">
+    <h2 class="mb-4 text-warning fw-bold">MY Movie</h2>
+    <hr style="color: rgb(255,193,7); border: 2px solid rgb(255,169,0); opacity: 1">
     <div class="row g-3 mx-3 my-3">
       <WatchlistItem
         v-for="movie in movieList" 
@@ -57,5 +57,10 @@ export default {
 </script>
 
 <style>
-
+#Mymovie {
+  padding-left: 10vw !important;
+  padding-right: 10vw !important;
+  padding-top: 5vh !important;
+  padding-bottom: 5vh !important;
+}
 </style>

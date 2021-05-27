@@ -17,7 +17,25 @@
             <li class="nav-item">
               <router-link class="nav-link" :to="{ name: 'Reviews' }">Community</router-link>
             </li>
-            <li class="nav-item dropdown">
+
+            <!-- 로그인 X => Login / 로그인 => User 보여주기 -->
+            <li class="nav-item dropdown" v-if="isLogin">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                User
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><router-link class="dropdown-item" :to="{ name: 'Watchlist' }">Watchlist</router-link></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <router-link class="dropdown-item" v-if="isLogin" @click.native="onLogout" to="#">Logout</router-link>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item" v-else>
+              <router-link class="nav-link" :to="{ name: 'Login' }" >Login</router-link>
+            </li>
+              
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 User
               </a>
@@ -29,7 +47,7 @@
                 <li><hr class="dropdown-divider"></li>
                 <li><router-link class="dropdown-item" :to="{ name: 'Watchlist' }">Watchlist</router-link></li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </div>
       </div>
