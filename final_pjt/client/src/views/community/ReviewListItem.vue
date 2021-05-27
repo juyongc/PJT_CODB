@@ -4,7 +4,7 @@
       <h2 class="d-inline text-warning fw-bold">User Review</h2>
       <button class="btn btn-secondary mt-2 d-inline" @click="backToList">Back to List</button>
     </div>
-    <hr class="text-warning">
+    <hr style="color: rgb(255,193,7); border: 2px solid rgb(255,169,0); opacity: 1">
 
     <div class="card text-light bg-dark">
       <div class="card-header">

@@ -19,7 +19,7 @@
             </li>
             <!-- 로그인 X => Login / 로그인 => User 보여주기 -->
             <li class="nav-item dropdown" v-if="isLogin">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a class="nav-link dropdown-toggle fw-bold text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 User
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -31,7 +31,7 @@
               </ul>
             </li>
             <li class="nav-item" v-else>
-              <router-link class="nav-link" :to="{ name: 'Login' }" >Login</router-link>
+              <router-link class="nav-link fw-bold text-light" :to="{ name: 'Login' }" >Login</router-link>
             </li>
           </ul>
         </div>

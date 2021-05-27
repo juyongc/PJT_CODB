@@ -4,19 +4,12 @@
       <h2 class="d-inline text-warning fw-bold">Write a new review</h2>
       <button class="btn btn-secondary mt-2 d-inline" @click="backToList">Back to List</button>
     </div>
-    <hr class="text-warning">
+    <hr style="color: rgb(255,193,7); border: 2px solid rgb(255,169,0); opacity: 1">
     <b-card bg-variant="dark" v-if="show">
       <b-form-group
         id="title-input"
-        label=""
-        label-size="lg"
-        label-for="title-input"
-        label-cols-sm="6"
-        label-cols-lg="6"
         label-class="text-light fw-bold text-center"
-        content-cols-sm="6"
-        content-cols-lg="6"
-        class="d-flex mb-3"
+        class="mb-3"
       >
         <b-form-input
           id="title-input"
@@ -29,13 +22,7 @@
 
       <b-form-group
         id="movie-title-input"
-        label-for="movie-title"
-        label-class="text-light"
-        label-cols-sm="6"
-        label-cols-lg="6"
-        content-cols-sm="6"
-        content-cols-lg="6"
-        class="d-flex mb-4"
+        class="mb-3"
       >
         <b-form-input
           id="movie-title"
@@ -55,13 +42,7 @@
 
       <b-form-group 
         id="movie-rating-input"
-        label-for="movie-rating"
-        label-class="text-light"
-        label-cols-sm="6"
-        label-cols-lg="6"
-        content-cols-sm="6"
-        content-cols-lg="6"
-        class="d-flex mb-3">  
+        class="mb-3">  
 
         <b-input-group>
           <b-input-group-prepend>

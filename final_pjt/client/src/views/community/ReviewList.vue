@@ -3,14 +3,14 @@
 
     <div class="d-flex justify-content-between">
       <h2 class="d-inline text-warning fw-bold">Movie Review Community</h2>
-      <button class="btn btn-secondary mt-2 d-inline" @click="createReview">New Review</button>
+      <button class="mybtn btn btn-secondary mt-2 d-inline" @click="createReview">New Review</button>
     </div>
-    <hr class="text-warning">
+    <hr style="color: rgb(255,193,7); border: 2px solid rgb(255,169,0); opacity: 1">
 
     <div v-if="reviews.length > 0">
       <div class="row">
         <div class="col-12 col-lg-7 mb-4">
-          <div class="list-group mx-auto" v-for="review in reviews" :key="review.pk">
+          <div class="main-review list-group mx-auto mb-2" v-for="review in reviews" :key="review.pk">
             <a @click="getReviewDetail(review)" class="list-group-item list-group-item-action">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1 fw-bold d-inline">{{ review.title }}</h5>
@@ -31,7 +31,7 @@
         <div class="sorting-reviews col-12 col-lg-4 mx-auto">
           <div class="my-4">
             <h5 class="text-warning fw-bold mb-4">Most Comments</h5>
-             <div class="list-group list-group-flush">
+             <div class="list-group list-group-flush mb-2">
                 <a 
                 v-for="review in commentReviews"
                 :key="review.pk"
@@ -45,7 +45,7 @@
                 </a>
             </div>
           </div>
-          <hr class="text-warning">
+          <hr style="color: rgb(255,193,7); border: 2px solid rgb(255,169,0); opacity: 1">
           <div class="my-5">
             <h5 class="text-warning fw-bold mb-4">Highest Rate</h5>
              <div class="list-group list-group-flush">
@@ -155,7 +155,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #ReivewList {
   padding-left: 10vw !important;
   padding-right: 10vw !important;
@@ -164,5 +164,17 @@ export default {
 }
 .sorting-reviews .list-group-item {
   background-color: black !important;
+}
+.mybtn {
+  margin-right: .5rem !important;
+  background-color: rgb(50, 50, 50);
+  border-color: rgb(50, 50, 50);
+}
+.main-review > .list-group-item {
+  background-color:rgb(35, 30, 30) !important; 
+  border:1px solid rgb(35, 30, 30) !important
+}
+h5,small,p {
+  color: rgb(220, 220, 220);
 }
 </style>

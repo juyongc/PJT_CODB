@@ -13,7 +13,6 @@
           :movie="movie"
         />
       </div>
-      <hr>
     </div>
     <div v-else>
       <p>

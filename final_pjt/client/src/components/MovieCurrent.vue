@@ -40,6 +40,7 @@
                 <b class="text-light pe-3">{{ idx+1 }}위</b> 
                 <span class="fw-light text-light">{{ movie.title }}</span>
               </div>
+              <!-- <hr style="color: rgb(255,193,7); border: 1px rgb(255,169,0); opacity: 1"> -->
               </button>
             </div>
         </div>

@@ -4,7 +4,7 @@
       <h2 class="d-inline text-warning fw-bold">Edit review</h2>
       <button class="btn btn-secondary mt-2 d-inline" @click="backToList">Back to List</button>
     </div>
-    <hr class="text-warning">
+    <hr style="color: rgb(255,193,7); border: 2px solid rgb(255,169,0); opacity: 1">
     <b-card bg-variant="dark" v-if="show">
       <b-form-group
         id="title-input"
