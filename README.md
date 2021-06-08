@@ -1,4 +1,4 @@
-# Final-pjt. 영화 검색, 추천, 리뷰 사이트 - "COMD"
+# Final-pjt. 영화 검색, 추천, 리뷰 사이트 - "CODB"
 
 > SSAFY 1학기 마지막 프로젝트
 
